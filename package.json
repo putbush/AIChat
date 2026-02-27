@@ -1,0 +1,29 @@
+{
+  "name": "aichat",
+  "version": "1.0.0",
+  "description": "AI Chat Application",
+  "scripts": {
+    "dev:frontend": "pnpm --filter frontend dev",
+    "dev:backend": "pnpm --filter backend start",
+    "dev": "concurrently \"pnpm dev:frontend\" \"pnpm dev:backend\"",
+    "lint:frontend": "pnpm --filter frontend lint",
+    "lint:backend": "pnpm --filter backend lint",
+    "lint": "concurrently \"pnpm lint:frontend\" \"pnpm lint:backend\""
+  },
+  "keywords": [],
+  "author": "Ilya Kladkov",
+  "license": "ISC",
+  "packageManager": "pnpm@10.30.2",
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7"
+  }
+  ,
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,md,json}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}
