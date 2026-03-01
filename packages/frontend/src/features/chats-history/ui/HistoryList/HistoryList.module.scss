@@ -1,0 +1,21 @@
+@use '@styles/helpers' as *;
+
+.history {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  gap: fluid(14, 10);
+  overflow-y: auto;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: fluid(10, 6);
+}
+
+.title {
+  font-size: fluid(16, 12);
+  font-weight: 500;
+  line-height: 1.4;
+}

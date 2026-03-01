@@ -1,115 +1,155 @@
 @use '@styles/helpers' as *;
 
 html {
-    &.is-lock {
-      overflow: hidden;  
-    }
+  &.is-lock {
+    overflow: hidden;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: var(--color-gray);
+  transition-duration: var(--transition-duration);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-white-300);
+  transition-duration: var(--transition-duration);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s;
+}
+
+*:hover {
+  scrollbar-color: var(--color-gray) transparent;
 }
 
 body {
-    @include fluid-text(18, 14);
+  @include fluid-text(20, 10);
 
-    display: flex;
-    flex-direction: column;
-    font-family: var(--font-inter);
-    letter-spacing: -0.03em;
-    color: var(--color-gray-50);
-    background-color: var(--color-dark);
+  display: flex;
+  flex-direction: column;
+  color: var(--color-white-200);
+  font-family: var(--font-inter);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: normal;
+
+  background: url('/background.svg') no-repeat;
+  background-color: var(--color-black-300);
+  background-size: cover;
 }
 
 main {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
-h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6 {
-    color: var(--color-light);
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  color: var(--color-light);
+  font-weight: 600;
 }
 
-h1, .h1,
-h2, .h2,
-h3, .h3 {
-    font-family: var(--font-family-accent);
-    font-weight: 500;
+h1,
+.h1 {
+  font-size: fluid(60, 30);
+  line-height: 1.24;
 }
 
-h4, .h4,
-h5, .h5,
-h6, .h6 {
-    font-weight: 600;
+h2,
+.h2 {
+  font-size: fluid(46, 24);
+  line-height: 1.26;
 }
 
-h1, .h1 {
-    @include fluid-text(70, 30);
-
-    line-height: 1.2;
+h3,
+.h3 {
+  font-size: fluid(38, 20);
+  line-height: 1.25;
 }
 
-h2, .h2 {
-    @include fluid-text(58, 28);
-
-    line-height: 1.3;
+h4,
+.h4 {
+  font-size: fluid(32, 18);
+  line-height: 1.3;
 }
 
-h3, .h3 {
-    @include fluid-text(40, 24);
+h5,
+.h5 {
+  font-size: fluid(26, 16);
+  line-height: 1.36;
 }
 
-h4, .h4 {
-    @include fluid-text(26, 18);
+h6,
+.h6 {
+  font-size: fluid(22, 14);
+  font-weight: bold;
 }
 
-h5, .h5 {
-    @include fluid-text(24, 18);
-}
-
-h6, .h6 {
-    @include fluid-text(20, 16);
-}
-
-a, 
-button, 
-label, 
-input, 
-textarea, 
-select, 
+a,
+button,
+label,
+input,
+textarea,
+select,
 svg * {
-    transition-duration: var(--transition-duration);
+  transition-duration: var(--transition-duration);
 }
 
 a {
-    color: inherit;
+  color: inherit;
 
-    @include hover {
-        color: var(--color-accent);
-    }
+  @include hover {
+    color: var(--color-accent);
+  }
 
-    &[class] {
-        text-decoration: none;
-    }
+  &[class] {
+    text-decoration: none;
+  }
 }
 
 :focus-visible {
-    outline: rem(2) dashed var(--color-light);
-    outline-offset: rem(4);
-    transition-duration: 0s !important;
+  outline: rem(2) dashed var(--color-light);
+  outline-offset: rem(4);
+  transition-duration: 0s !important;
 }
-
 
 a,
 button {
-    &[aria-label] {
-        position: relative;
+  &[aria-label] {
+    position: relative;
 
-        &::before {
-            @include abs-center;
-            @include square(rem(44));
+    &::before {
+      @include abs-center;
+      @include square(rem(44));
 
-            content: '';
-        }
+      content: '';
     }
+  }
 }

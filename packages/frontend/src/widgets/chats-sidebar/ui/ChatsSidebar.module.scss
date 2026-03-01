@@ -1,3 +1,23 @@
+@use '@styles/helpers' as *;
+
 .sidebar {
-    background-color: var(--color-dark-10);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px;
+  width: fluid(290, 200);
+  min-width: fluid(290, 200);
+  background-color: var(--color-black-200);
+  border-right: var(--border);
+  overflow: hidden;
+  z-index: 1000;
+  transition: width 0.3s ease, min-width 0.3s ease, padding 0.3s ease;
+}
+
+.closed {
+  justify-content: space-between;
+  width: 60px;
+  min-width: 60px;
+  padding: 20px 0;
+  align-items: center;
 }

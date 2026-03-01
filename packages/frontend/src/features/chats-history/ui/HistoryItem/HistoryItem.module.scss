@@ -1,0 +1,20 @@
+@use '@styles/helpers' as *;
+
+.item {
+  display: flex;
+  gap: fluid(10, 6);
+  padding: fluid(13, 8) fluid(12, 8);
+  border-radius: 12px;
+
+  &:hover {
+    background-color: var(--color-gray);
+  }
+}
+
+.title {
+  font-size: fluid(13, 10);
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

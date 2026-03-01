@@ -1,0 +1,14 @@
+@use '@styles/helpers' as *;
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: fluid(20, 14);
+  font-weight: 500;
+  font-size: fluid(12, 10);
+
+  & > a {
+    text-decoration: none;
+  }
+}
