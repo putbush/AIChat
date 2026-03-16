@@ -1,21 +1,32 @@
 'use client';
 
-import { HistoryItem } from '../HistoryItem';
-import { Chat } from '@entities/chat';
-import { useGetChats } from '@features/chats-history/api';
+import { HistoryItem } from '@entities/chat/ui/HistoryItem';
 import styles from './HistoryList.module.scss';
+import { useChatsHistory } from '@features/chats-history/api';
 
 export const HistoryList = () => {
-  const chats: Chat[] = useGetChats();
+  const { data, error } = useChatsHistory();
 
-  return (
-    <div className={styles.history}>
-      <span className={styles.title}>Recent</span>
+  let component;
+
+  if (error || !data || data.length === 0) {
+    component = (
+        <p className={styles.empty}>Create your first chat</p>
+    );
+  } else {
+    component = (
       <ul className={styles.list}>
-        {chats.map((chat) => (
-          <HistoryItem key={chat.id} title={chat.title} id={chat.id} />
+        {data.map((chat) => (
+          <HistoryItem key={chat.id} chat={chat} />
         ))}
       </ul>
-    </div>
+    );
+  }
+
+  return (
+    <section className={styles.history}>
+      <h3 className={styles.title}>Recent</h3>
+      {component}
+    </section>
   );
 };

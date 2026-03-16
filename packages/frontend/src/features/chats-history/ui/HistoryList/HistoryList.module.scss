@@ -15,7 +15,12 @@
 }
 
 .title {
-  font-size: fluid(16, 12);
   font-weight: 500;
-  line-height: 1.4;
+}
+
+.empty {
+  color: var(--color-white-300);
+  font-style: italic;
+  margin-inline: auto;
+  padding-block: fluid(12, 8);
 }

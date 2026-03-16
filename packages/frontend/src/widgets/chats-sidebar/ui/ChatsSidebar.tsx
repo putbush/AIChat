@@ -3,7 +3,7 @@
 import { SidebarHeader } from './SidebarHeader';
 import { ToggleSidebar } from './ToggleSidebar';
 import { CreateChatButton, HistoryList } from '@features/chats-history';
-import { UserProfile } from '@features/auth';
+import { UserProfile } from '@features/user';
 import { SidebarFooter } from './SidebarFooter';
 import { observer } from 'mobx-react';
 import { sidebarStore } from '../model/chats-sidebar.store';
@@ -26,7 +26,7 @@ export const ChatsSidebar = observer(() => {
         </>
       ) : (
         <>
-          <ToggleSidebar closed onClick={toggleSidebar} />
+          <ToggleSidebar onClick={toggleSidebar} />
           <UserProfile isOpen={isOpen} />
         </>
       )}

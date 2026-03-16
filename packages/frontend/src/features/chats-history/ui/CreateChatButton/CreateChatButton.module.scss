@@ -5,6 +5,7 @@
   justify-content: space-between;
   gap: 6px;
   align-items: center;
+  color: var(--color-white-200);
   padding: fluid(8, 6) fluid(12, 8);
   font-size: fluid(14, 10);
   border: var(--border);
@@ -25,7 +26,7 @@
   padding: fluid(5, 3) fluid(8, 6);
   background-color: var(--color-black-100);
   border-radius: 8px;
-  transition-duration: var(--transition-duration);
+  transition: var(--transition-duration);
 
   &:hover {
     transform: scale(1.05);
@@ -33,5 +34,9 @@
 
   &:not(:hover) {
     transform: scale(1);
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 }

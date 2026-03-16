@@ -1,1 +1,1 @@
-export type { Chat } from './types';
+export {HistoryItem} from './ui/HistoryItem';

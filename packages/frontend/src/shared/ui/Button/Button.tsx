@@ -1,14 +1,20 @@
 import styles from './Button.module.scss';
 
-export const Button = (props: {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  className?: string;
-  ariaLabel?: string;
-  onClick?: () => void;
-}) => {
-  const { children, className, ariaLabel, onClick } = props;
+}
+
+export const Button = (props: ButtonProps) => {
+  const { children, className, type, disabled, 'aria-label': ariaLabel, 'aria-pressed': ariaPressed, onClick } = props;
   return (
-    <button className={`${styles.button} ${className}`} aria-label={ariaLabel} onClick={onClick}>
+    <button
+      type={type}
+      className={`${styles.button} ${className}`}
+      aria-label={ariaLabel}
+      aria-pressed={ariaPressed}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

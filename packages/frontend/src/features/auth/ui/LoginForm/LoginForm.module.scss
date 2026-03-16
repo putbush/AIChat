@@ -1,0 +1,26 @@
+@use '@styles/helpers' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: fluid(480, 350);
+}
+
+.button {
+    margin-top: 10px;
+    width: 100%;
+    padding-block: 13px;
+    color: var(--color-black-400);
+    background: linear-gradient(86deg, #A886F8 0%, #65E2FE 100%);
+}
+
+.error {
+    color: var(--color-red);
+}
+
+.isInvalid {
+    opacity: 0.5;
+    cursor: default;
+}

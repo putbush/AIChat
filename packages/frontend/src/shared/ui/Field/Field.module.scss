@@ -1,0 +1,48 @@
+@use '@styles/helpers' as *;
+
+.formGroup {
+    width: 100%;
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  color: var(--color-white);
+  padding: 17px;
+  background-color: var(--color-black-100);
+  border: var(--color-gray) 1px solid;
+  border-radius: 12px;
+
+  &:focus {
+    border-color: #A886F8;
+  }
+}
+
+.eyeButton {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 20px;
+  background-color: transparent;
+  padding: 0;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-gray);
+    outline-offset: 2px;
+  }
+}
+
+.isInvalid {
+  border-color: var(--color-red);
+}
+
+.error {
+  padding-top: 5px;
+  font-size: fluid(12, 10);
+  color: var(--color-red);
+}

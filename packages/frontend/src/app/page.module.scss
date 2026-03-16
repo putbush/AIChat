@@ -1,4 +1,7 @@
-.page { 
-    display: flex;
-    height: 100vh;
+.page {
+  display: flex;
+  height: 100vh;
+
+  background: url('/background.svg') no-repeat;
+  background-size: cover;
 }

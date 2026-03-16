@@ -6,7 +6,7 @@ export const SidebarHeader = ({ toggleSidebar }: { toggleSidebar: () => void }) 
   return (
     <div className={styles.header}>
       <Logo />
-      <ToggleSidebar closed={false} onClick={toggleSidebar} />
+      <ToggleSidebar onClick={toggleSidebar} />
     </div>
   );
 };

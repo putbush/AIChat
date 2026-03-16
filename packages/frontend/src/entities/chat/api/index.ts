@@ -1,0 +1,2 @@
+export { getChatsHistory } from "./getChatsHistory"
+

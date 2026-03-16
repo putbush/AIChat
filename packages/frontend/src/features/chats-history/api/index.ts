@@ -1,1 +1,1 @@
-export { useGetChats } from './useGetChats';
+export { useChatsHistory } from './useChatsHistory';
