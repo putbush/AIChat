@@ -1,8 +1,16 @@
 @use '@styles/helpers/functions' as *;
 
-$laptop: 1440.98;
+$desktop: 1919.98;
+$laptop: 1439.98;
+$tablet: 1023.98;
 $mobile: 767.98;
-$mobile-s: 480.98;
+$mobile-s: 479.98;
+
+@mixin desktop-above {
+  @media (width > rem($desktop)) {
+    @content;
+  }
+}
 
 @mixin laptop-above {
   @media (width > rem($laptop)) {
@@ -12,6 +20,18 @@ $mobile-s: 480.98;
 
 @mixin laptop {
   @media (width <= rem($laptop)) {
+    @content;
+  }
+}
+
+@mixin tablet-above {
+  @media (width > rem($tablet)) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (width <= rem($tablet)) {
     @content;
   }
 }

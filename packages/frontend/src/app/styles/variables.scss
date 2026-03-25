@@ -13,8 +13,12 @@
   --color-white-400: #3b3b3b;
   --color-green: #27AE60;
   --color-red: #ff0000;
+  --color-modal-bg: rgba(0, 0, 0, 0.5);
 
   --border: var(--color-black-100) 1px solid;
+  --border-gray: var(--color-gray) 1px solid;
+
+  --linear-gradient: linear-gradient(84deg, var(--color-purple-secondary) 0%, var(--color-light-blue-primary) 100%);
 
   --transition-duration: 0.2s;
 }

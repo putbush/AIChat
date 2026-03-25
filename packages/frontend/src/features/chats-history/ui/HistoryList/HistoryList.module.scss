@@ -6,12 +6,16 @@
   flex: auto;
   gap: fluid(14, 10);
   overflow-y: auto;
+  min-height: 0;
 }
 
 .list {
   display: flex;
   flex-direction: column;
   gap: fluid(10, 6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .title {

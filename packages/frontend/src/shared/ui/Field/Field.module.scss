@@ -1,7 +1,7 @@
 @use '@styles/helpers' as *;
 
 .formGroup {
-    width: 100%;
+  width: 100%;
 }
 
 .inputWrap {
@@ -12,29 +12,23 @@
   display: block;
   width: 100%;
   color: var(--color-white);
-  padding: 17px;
+  padding: rem(17);
   background-color: var(--color-black-100);
-  border: var(--color-gray) 1px solid;
-  border-radius: 12px;
-
-  &:focus {
-    border-color: #A886F8;
-  }
+  border: var(--border-gray);
+  border-radius: rem(12);
 }
 
 .eyeButton {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
+  aspect-ratio: 1 / 1;
   top: 50%;
   transform: translateY(-50%);
-  right: 20px;
+  right: rem(10);
   background-color: transparent;
-  padding: 0;
-
-  &:focus-visible {
-    outline: 2px solid var(--color-gray);
-    outline-offset: 2px;
-  }
+  padding: 0; 
 }
 
 .isInvalid {
@@ -42,7 +36,7 @@
 }
 
 .error {
-  padding-top: 5px;
+  padding-top: rem(5);
   font-size: fluid(12, 10);
   color: var(--color-red);
 }

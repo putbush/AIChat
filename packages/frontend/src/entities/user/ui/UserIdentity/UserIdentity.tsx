@@ -14,14 +14,9 @@ type UserIdentityProps = {
   className?: string;
 };
 
-const UserIdentityComponent = ({
-  href,
-  avatarSrc,
-  name,
-  email,
-  isOpen,
-  className,
-}: UserIdentityProps) => {
+const UserIdentityComponent = (props: UserIdentityProps) => {
+  const { href, avatarSrc, name, email, isOpen, className } = props;
+
   return (
     <Link href={href} className={`${styles.userButton} ${className ?? ''}`.trim()}>
       <Image

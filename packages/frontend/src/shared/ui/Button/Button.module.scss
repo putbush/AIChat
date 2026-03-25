@@ -1,5 +1,8 @@
+@use '@styles/helpers' as *;
+
 .button {
-    background-color: var(--color-black-300);
-    border: none;
-    border-radius: 8px;
+  border: none;
+  border-radius: rem(8);
+  min-height: rem(40);
+  padding-inline: rem(14);
 }

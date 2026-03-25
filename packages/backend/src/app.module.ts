@@ -4,7 +4,7 @@ import { AuthModule } from '@features/auth/auth.module';
 import { PrismaModule } from '@infra/prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import config from '@common/config';
-import { ProfileModule } from '@features/profile/profile.module';
+import { UserModule } from '@features/user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import path from 'path';
 
@@ -20,7 +20,7 @@ import path from 'path';
       serveRoot: '/public',
     }),
     ChatModule,
-    ProfileModule,
+    UserModule,
     PrismaModule,
   ],
 })

@@ -1,7 +1,5 @@
 .page {
   display: flex;
-  height: 100vh;
-
-  background: url('/background.svg') no-repeat;
-  background-size: cover;
+  min-height: 100dvh;
+  background: url('/background.svg') center / cover no-repeat;
 }

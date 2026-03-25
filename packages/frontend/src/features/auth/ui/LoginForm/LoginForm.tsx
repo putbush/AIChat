@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Field } from '@shared/ui/Field';
 import { LoginCredentialsSchema, LoginDataDTO } from '@aichat/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ export const LoginForm = () => {
         router.push('/');
       },
       onError: (error) => {
-        setError(error.message)
+        setError(error.message);
       },
     });
   };
@@ -64,6 +65,10 @@ export const LoginForm = () => {
       >
         {isPending ? 'Logging in...' : 'Login'}
       </Button>
+      <span className={styles.line}></span>
+      <Link href="/register" className={styles.link}>
+        Don&apos;t have an account? Sign up
+      </Link>
     </form>
   );
 };

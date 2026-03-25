@@ -4,8 +4,12 @@
   @if math.is-unitless($pixel) {
     @return math.div($pixel, 16) + rem;
   } @else {
-    @error 'Не используйте единицы измерения при работе с функцией rem()! Передавайте аргументом только числа.'
+    @error 'Use unitless numbers with rem() helper.';
   }
+}
+
+@function to-rem($pixel) {
+  @return rem($pixel);
 }
 
 @function fluid($max: 100, $min: 10) {

@@ -1,9 +1,11 @@
+@use '@styles/helpers' as *;
+
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: rem(36);
+  height: rem(36);
   padding: 0;
   background-color: var(--color-black-200);
   border-radius: 50%;

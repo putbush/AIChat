@@ -3,9 +3,15 @@
 .page {
   display: flex;
   align-items: center;
-  gap: 20px;
-  height: 100vh;
-  padding-left: 20px;
+  gap: rem(24);
+  min-height: 100dvh;
+  padding: rem(20);
+}
+
+.image {
+  width: min(42vw, rem(640));
+  height: auto;
+  object-fit: contain;
 }
 
 .loginContainer {
@@ -14,24 +20,55 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20;
-  height: 100vh;
-
-  background: url('/login-background.svg') no-repeat;
-  background-size: cover;
+  gap: rem(20);
+  min-height: calc(100dvh - rem(40));
+  border-radius: rem(24);
+  padding: fluid(36, 20) rem(20);
+  background: url('/login-background.svg') center / cover no-repeat;
 }
 
 .loginHeader {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: rem(10);
+  margin-bottom: rem(30);
 }
 
 .loginDescription {
-  max-width: fluid(400, 360);
+  max-width: fluid(430, 320);
   font-size: fluid(20, 14);
   font-weight: 500;
   text-align: center;
+}
+
+@include tablet {
+  .page {
+    justify-content: center;
+  }
+
+  .image {
+    display: none;
+  }
+
+  .loginContainer {
+    max-width: rem(720);
+    min-height: calc(100dvh - rem(40));
+  }
+}
+
+@include mobile {
+  .page {
+    padding: rem(12);
+  }
+
+  .loginContainer {
+    min-height: calc(100dvh - rem(24));
+    border-radius: rem(16);
+    padding: rem(20) rem(14);
+  }
+
+  .loginHeader {
+    margin-bottom: rem(20);
+  }
 }

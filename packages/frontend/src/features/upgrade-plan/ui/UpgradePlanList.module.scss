@@ -1,0 +1,14 @@
+@use '@styles/helpers' as *;
+
+.plans {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: fluid(24, 14);
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    max-width: rem(430);
+    margin-inline: auto;
+  }
+}

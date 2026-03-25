@@ -1,0 +1,49 @@
+@use '@styles/helpers' as *;
+
+.modal {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100dvh;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  z-index: 1111;
+  padding: rem(30) rem(20);
+  background-color: var(--color-modal-bg);
+  backdrop-filter: blur(rem(40));
+}
+
+.content {
+  width: min(100%, rem(1220));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto 0;
+}
+
+.title {
+  font-size: fluid(56, 30);
+  font-weight: 500;
+  margin-bottom: fluid(60, 28);
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  top: rem(20);
+  right: rem(20);
+  background: transparent;
+  transition: var(--transition-duration);
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  @include mobile {
+    top: rem(12);
+    right: rem(12);
+  }
+}

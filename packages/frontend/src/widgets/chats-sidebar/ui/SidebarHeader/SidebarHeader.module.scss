@@ -1,7 +1,9 @@
+@use '@styles/helpers' as *;
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 20px;
-  border-bottom: var(--color-gray) 1px solid;
+  padding-bottom: rem(20);
+  border-bottom: var(--border-gray);
 }

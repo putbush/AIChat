@@ -3,8 +3,8 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 20px;
+  gap: rem(30);
+  padding: rem(20);
   width: fluid(290, 200);
   min-width: fluid(290, 200);
   background-color: var(--color-black-200);
@@ -12,12 +12,45 @@
   overflow: hidden;
   z-index: 1000;
   transition: width 0.3s ease, min-width 0.3s ease, padding 0.3s ease;
+
+  @include mobile {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(rem(290), calc(100vw - rem(56)));
+    min-width: min(rem(290), calc(100vw - rem(56)));
+    max-width: calc(100vw - rem(56));
+    box-shadow: rem(8) 0 rem(24) rgba(0, 0, 0, 0.35);
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+    z-index: 1200;
+  }
 }
 
 .closed {
   justify-content: space-between;
-  width: 60px;
-  min-width: 60px;
-  padding: 20px 0;
+  width: rem(60);
+  min-width: rem(60);
+  padding: rem(20) 0;
   align-items: center;
+
+  @include mobile {
+    width: min(rem(290), calc(100vw - rem(56)));
+    min-width: min(rem(290), calc(100vw - rem(56)));
+    padding: rem(20);
+    align-items: stretch;
+    justify-content: flex-start;
+    transform: translateX(calc(-100% - rem(12)));
+  }
+}
+
+.mobileBurger {
+  display: none;
+
+  @include mobile {
+    display: block;
+    position: fixed;
+    top: rem(16);
+    left: rem(16);
+    z-index: 1101;
+  }
 }

@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Field } from '@shared/ui/Field';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RegistrationSchema, type RegistrationDTO } from '@features/auth/model';
+import Link from 'next/link';
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -26,7 +27,7 @@ export const RegisterForm = () => {
 
   const onSubmit = (data: RegistrationDTO) => {
     const { confirmPassword: _, ...dto } = data;
-    
+
     setError(null);
     mutate(dto, {
       onSuccess: () => {
@@ -84,6 +85,10 @@ export const RegisterForm = () => {
       >
         {isPending ? 'Registering...' : 'Register'}
       </Button>
+      <span className={styles.line}></span>
+      <Link href="/login" className={styles.link}>
+        Already have an account? Log in
+      </Link>
     </form>
   );
 };

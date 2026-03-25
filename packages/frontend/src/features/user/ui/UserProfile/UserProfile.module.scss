@@ -4,9 +4,9 @@
   display: flex;
   flex-direction: column;
   gap: fluid(18, 14);
-  padding: fluid(12, 8);
+  padding: fluid(14, 10);
   background-color: var(--color-black-100);
-  border-radius: 12px;
+  border-radius: rem(12);
 }
 
 .header {
@@ -35,13 +35,13 @@
 }
 
 .avatar {
-   border-radius: 50%;
+  border-radius: 50%;
 }
 
 .info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: rem(2);
   min-width: 0;
 }
 
@@ -63,21 +63,26 @@
   white-space: nowrap;
 }
 
-.subscription {
-  font-size: fluid(11, 8);
+.subscriptionBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: fluid(12, 10);
   font-weight: 500;
-  padding: 2px 6px;
+  line-height: 1;
+  padding: rem(3) rem(8);
   color: var(--color-black-200);
   background-color: var(--color-green);
-  border-radius: 4px;
+  border-radius: rem(999);
 }
 
 .upgrade {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
-  padding-block: fluid(8, 6);
+  gap: rem(6);
+  padding-block: fluid(9, 7);
+  border-radius: rem(10);
   background-color: var(--color-black-200);
   border: var(--border);
 
@@ -88,6 +93,6 @@
 
 .upgradeTitle {
   color: var(--color-white);
-  font-size: fluid(13, 10);
+  font-size: fluid(14, 12);
   font-weight: 500;
 }

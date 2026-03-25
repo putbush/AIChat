@@ -4,7 +4,7 @@
   display: flex;
   gap: fluid(10, 6);
   padding: fluid(13, 8) fluid(12, 8);
-  border-radius: 12px;
+  border-radius: rem(12);
 
   &:hover {
     background-color: var(--color-gray);

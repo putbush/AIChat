@@ -7,7 +7,7 @@ export const getUser = async (): Promise<User | null> => {
   try {
     const response = await requestWithRefresh<User>({
     method: 'GET',
-    url: '/profile',
+    url: '/user/profile',
   });
 
   return response.data;

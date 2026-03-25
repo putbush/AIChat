@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   FileTypeValidator,
   Get,
@@ -6,6 +7,7 @@ import {
   MaxFileSizeValidator,
   ParseFilePipe,
   Patch,
+  Post,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -13,19 +15,32 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Authorizated, Authorization } from '@common/decorators';
 import { UserMapper } from '@common/mappers';
 import type { User } from '@prisma/client';
-import type { User as UserResponse, AvatarUrlResponse } from '@aichat/shared';
-import type { IProfileService } from './interfaces/profile.interface';
+import type {
+  User as UserResponse,
+  AvatarUrlResponse,
+  SubscriptionType,
+} from '@aichat/shared';
+import type { IUserService } from './interfaces/user.interface';
 
-@Controller('profile')
-export class ProfileController {
+@Controller('user')
+export class UserController {
   constructor(
-    @Inject('IProfileService') private readonly profileService: IProfileService,
+    @Inject('IUserService') private readonly userService: IUserService,
   ) {}
 
   @Authorization()
-  @Get()
+  @Get('profile')
   getProfile(@Authorizated() user: User): UserResponse {
     return UserMapper.toDto(user);
+  }
+
+  @Authorization()
+  @Post('subscription')
+  async setSubscription(
+    @Authorizated('id') id: string,
+    @Body('subscription') subscriptionData: SubscriptionType,
+  ): Promise<{ subscription: SubscriptionType }> {
+    return this.userService.setSubscription(id, subscriptionData);
   }
 
   @Authorization()
@@ -49,6 +64,6 @@ export class ProfileController {
     file: Express.Multer.File,
     @Authorizated('id') id: string,
   ): Promise<AvatarUrlResponse> {
-    return await this.profileService.setAvatar(id, file);
+    return this.userService.setAvatar(id, file);
   }
 }

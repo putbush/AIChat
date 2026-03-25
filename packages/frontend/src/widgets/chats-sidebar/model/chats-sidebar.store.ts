@@ -12,6 +12,10 @@ class ChatsSidebarStore {
   toggleSidebar = () => {
     this.isOpen = !this.isOpen;
   };
+
+  setIsOpen = (value: boolean) => {
+    this.isOpen = value;
+  };
 }
 
 export const sidebarStore = new ChatsSidebarStore();

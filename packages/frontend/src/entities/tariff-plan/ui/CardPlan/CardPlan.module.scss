@@ -1,0 +1,132 @@
+@use '@styles/helpers' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: rem(22);
+  width: 100%;
+  max-width: rem(360);
+  padding: rem(20);
+  border-radius: rem(14);
+  border: var(--border-gray);
+  background-color: var(--color-black-300);
+  transition: transform var(--transition-duration), border-color var(--transition-duration);
+
+  &_active {
+    border-color: #65e2fe30;
+    background: linear-gradient(90deg, #a886f809 0%, #65e2fe09 100%);
+  }
+
+  &:hover {
+    transform: translateY(rem(-2));
+  }
+
+  @include laptop-above {
+    max-width: rem(390);
+    padding: rem(24);
+  }
+
+  @include mobile {
+    max-width: none;
+    padding: rem(18);
+    gap: rem(18);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: rem(10);
+  flex-wrap: wrap;
+}
+
+.cost {
+  margin: 0;
+  font-size: fluid(42, 32);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.planBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: rem(4) rem(8);
+  font-size: fluid(13, 10);
+  color: var(--color-white-300);
+  border: var(--border-gray);
+  border-radius: rem(999);
+  background-color: var(--color-black-100);
+
+  &_active {
+    color: var(--color-black-400);
+    background-color: var(--color-light-blue-primary);
+  }
+}
+
+.subTitle {
+  margin: 0;
+  color: var(--color-white-200);
+  border-bottom: var(--border-gray);
+  padding-bottom: rem(22);
+  font-size: fluid(16, 13);
+  line-height: 1.5;
+
+  @include mobile {
+    padding-bottom: rem(16);
+  }
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: rem(10);
+  margin: 0;
+  margin-bottom: auto;
+  padding: 0;
+  list-style: none;
+}
+
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: rem(10);
+  font-size: fluid(15, 13);
+  line-height: 1.6;
+
+  &::before {
+    content: '';
+    display: block;
+    width: rem(18);
+    height: rem(18);
+    flex: 0 0 rem(18);
+    margin-top: rem(3);
+    background: url('/blue-tick.svg') center / contain no-repeat;
+  }
+}
+
+.current {
+  cursor: default;
+  padding-block: rem(13);
+  color: var(--color-white-200);
+  background-color: transparent;
+  opacity: 0.4;
+}
+
+.upgrade {
+  font-size: fluid(18, 14);
+  font-weight: 500;
+  padding-block: rem(13);
+  border-radius: rem(8);
+  background-color: var(--color-white-200);
+  transition: opacity var(--transition-duration);
+
+  &_active {
+    color: var(--color-black-400);
+    background: var(--linear-gradient);
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

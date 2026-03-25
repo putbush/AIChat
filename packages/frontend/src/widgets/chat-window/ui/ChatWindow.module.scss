@@ -1,8 +1,12 @@
+@use '@styles/helpers' as *;
+
 .test {
-  color: red;
+  color: var(--color-white-300);
 }
 
 .window {
   display: flex;
   flex-grow: 1;
+  min-width: 0;
+  padding: fluid(40, 16);
 }

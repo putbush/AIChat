@@ -7,7 +7,10 @@ import styles from './UserProfile.module.scss';
 import { getImageUrl } from '@shared/lib/imageUrl';
 import Image from 'next/image';
 
-export const UserProfile = ({ isOpen }: { isOpen: boolean }) => {
+type UserProfileProps = { isOpen: boolean; toggleUpgradeModal: () => void }
+
+export const UserProfile = (props: UserProfileProps) => {
+  const { isOpen, toggleUpgradeModal } = props;
   const { data, error } = useUser();
 
   // if (isPending) {
@@ -51,12 +54,12 @@ export const UserProfile = ({ isOpen }: { isOpen: boolean }) => {
           isOpen
           className={styles.userIdentity}
         />
-        <div className={styles.subscription}>{subscription.toUpperCase()}</div>
+        <span className={styles.subscriptionBadge}>{subscription.toUpperCase()}</span>
       </div>
 
-      <Button className={styles.upgrade}>
+      <Button className={styles.upgrade} onClick={toggleUpgradeModal}>
         <Image src="/upgrade.svg" alt="Upgrade Icon" width={20} height={20} />
-        <span className={styles.upgradeTitle}>Upgrade to Pro</span>
+        <span className={styles.upgradeTitle}>Upgrade Plan</span>
       </Button>
     </div>
   );

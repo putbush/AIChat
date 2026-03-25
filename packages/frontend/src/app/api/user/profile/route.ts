@@ -8,7 +8,7 @@ export const GET = async () => {
     async () => {
       const response = await requestWithRefresh<User>({
         method: 'GET',
-        url: '/profile',
+        url: '/user/profile',
       });
       return response;
     },

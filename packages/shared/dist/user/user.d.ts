@@ -1,5 +1,6 @@
 import { z } from 'zod';
 export declare const SubscriptionLevel: z.ZodEnum<["free", "plus", "pro"]>;
+export type SubscriptionType = z.infer<typeof SubscriptionLevel>;
 export declare const UserSchema: z.ZodObject<{
     id: z.ZodString;
     email: z.ZodString;
