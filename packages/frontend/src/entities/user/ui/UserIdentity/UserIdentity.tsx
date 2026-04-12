@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './UserIdentity.module.scss';
 import { memo } from 'react';
+import classNames from 'classnames';
 
 type UserIdentityProps = {
   href: string;
@@ -18,7 +19,7 @@ const UserIdentityComponent = (props: UserIdentityProps) => {
   const { href, avatarSrc, name, email, isOpen, className } = props;
 
   return (
-    <Link href={href} className={`${styles.userButton} ${className ?? ''}`.trim()}>
+    <Link href={href} className={classNames(styles.userButton, className)}>
       <Image
         src={avatarSrc}
         className={styles.avatar}

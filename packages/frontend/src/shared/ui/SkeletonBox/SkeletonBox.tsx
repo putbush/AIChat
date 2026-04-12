@@ -1,4 +1,5 @@
 import styles from './SkeletonBox.module.scss';
+import classNames from 'classnames';
 
 interface SkeletonBoxProps {
   width?: string | number;
@@ -13,5 +14,5 @@ export const SkeletonBox = ({ width, height, borderRadius, className }: Skeleton
     height: typeof height === 'number' ? `${height}px` : height,
     borderRadius: typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius,
   };
-  return <div className={`${styles.skeletonBox} ${className || ''}`} style={style} />;
+  return <div className={classNames(styles.skeletonBox, className)} style={style} />;
 };

@@ -20,4 +20,12 @@ export declare const UserSchema: z.ZodObject<{
     subscription: "free" | "plus" | "pro";
     avatarUrl?: string | null | undefined;
 }>;
+export declare const SubscriptionResponseSchema: z.ZodObject<{
+    subscription: z.ZodEnum<["free", "plus", "pro"]>;
+}, "strip", z.ZodTypeAny, {
+    subscription: "free" | "plus" | "pro";
+}, {
+    subscription: "free" | "plus" | "pro";
+}>;
 export type User = z.infer<typeof UserSchema>;
+export type SubscriptionResponse = z.infer<typeof SubscriptionResponseSchema>;

@@ -27,10 +27,12 @@
 }
 
 .closed {
-  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  gap: rem(30);
   width: rem(60);
   min-width: rem(60);
-  padding: rem(20) 0;
+  padding: rem(20) rem(5);
   align-items: center;
 
   @include mobile {

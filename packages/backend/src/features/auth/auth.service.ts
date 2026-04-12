@@ -11,7 +11,7 @@ import type { Request, Response } from 'express';
 import { RESRESH_TOKEN_COOKIE_NAME } from '@common/constants';
 import { JwtPayload } from './interfaces/jwt.payload';
 import { User } from '@prisma/client';
-import { AuthResponse } from '@aichat/shared';
+import { AuthTokens } from '@aichat/shared';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +37,7 @@ export class AuthService {
     name: string,
     email: string,
     password: string,
-  ): Promise<AuthResponse> {
+  ): Promise<AuthTokens> {
     const existingUser = await this.prisma.user.findUnique({
       where: { email },
     });
@@ -61,7 +61,7 @@ export class AuthService {
     res: Response,
     email: string,
     password: string,
-  ): Promise<AuthResponse> {
+  ): Promise<AuthTokens> {
     const user = await this.prisma.user.findUnique({
       where: { email },
     });
@@ -79,7 +79,7 @@ export class AuthService {
     return this.auth(res, user.id);
   }
 
-  async refresh(req: Request, res: Response): Promise<AuthResponse> {
+  async refresh(req: Request, res: Response): Promise<AuthTokens> {
     const refreshToken = req.cookies[RESRESH_TOKEN_COOKIE_NAME] as string;
 
     if (!refreshToken) {
@@ -103,7 +103,7 @@ export class AuthService {
   //   this.setCookie(res, RESRESH_TOKEN_COOKIE_NAME, new Date(0));
   // }
 
-  private auth(res: Response, id: string): AuthResponse {
+  private auth(res: Response, id: string): AuthTokens {
     const { accessToken, refreshToken } = this.generateTokens(id);
 
     // this.setCookie(res, refreshToken, expiresDate(this.JWT_REFRESH_TOKEN_TTL));

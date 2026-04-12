@@ -7,7 +7,7 @@ import type { SubscriptionType, User } from '@aichat/shared';
 
 type UpgradePlanListProps = {
   plans: {
-    name: string;
+    name: SubscriptionType;
     cost: string;
     subTitle: string;
     features: string[];
@@ -35,7 +35,6 @@ export const UpgradePlanList = (props: UpgradePlanListProps) => {
   return (
     <div className={styles.plans}>
       {plans.map((plan, index) => {
-        const alreadyHave = currentPlanIndex >= index;
 
         return (
           <CardPlan
@@ -44,9 +43,10 @@ export const UpgradePlanList = (props: UpgradePlanListProps) => {
             cost={plan.cost}
             subTitle={plan.subTitle}
             features={plan.features}
-            alreadyHave={alreadyHave}
+            index = {index}
+            currentSubscriptionIndex={currentPlanIndex}
             isActive={index === 1}
-            onClick={() => handleChangeSubscription(plan.name as SubscriptionType)}
+            onClick={() => handleChangeSubscription(plan.name)}
           />
         );
       })}

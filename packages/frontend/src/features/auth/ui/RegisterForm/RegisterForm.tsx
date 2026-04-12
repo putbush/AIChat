@@ -10,6 +10,7 @@ import { Field } from '@shared/ui/Field';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RegistrationSchema, type RegistrationDTO } from '@features/auth/model';
 import Link from 'next/link';
+import classNames from 'classnames';
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -79,8 +80,15 @@ export const RegisterForm = () => {
       />
       {error && <p className={styles.error}>{error}</p>}
       <Button
-        className={`${styles.button} ${(errors.name ?? errors.email ?? errors.password ?? errors.confirmPassword) ? styles.isInvalid : ''}`}
+        className={classNames(
+          styles.button,
+          {
+            [styles.isInvalid]:
+              errors.name ?? errors.email ?? errors.password ?? errors.confirmPassword,
+          },
+        )}
         type="submit"
+        gradient
         disabled={isPending}
       >
         {isPending ? 'Registering...' : 'Register'}

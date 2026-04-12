@@ -1,23 +1,35 @@
-import { Button } from '@shared/ui';
 import styles from './CardPlan.module.scss';
+import { UpgradeButton } from '../UpgradeButton';
+import classNames from 'classnames';
 
 type CardPlanProps = {
   cost: string;
   planName: string;
   subTitle: string;
   features: string[];
-  alreadyHave: boolean;
+  index: number;
+  currentSubscriptionIndex: number;
   isActive?: boolean;
   onClick: () => void;
 };
 
 export const CardPlan = (props: CardPlanProps) => {
-  const { cost, planName, subTitle, features, alreadyHave, isActive, onClick } = props;
+  const { cost, planName, subTitle, features, index, currentSubscriptionIndex, isActive, onClick } =
+    props;
+
   return (
-    <div className={`${styles.card} ${isActive ? styles.card_active : ''}`}>
+    <div
+      className={classNames(styles.card, {
+        [styles.card_active]: isActive,
+      })}
+    >
       <div className={styles.header}>
         <p className={styles.cost}>${cost}</p>
-        <span className={`${styles.planBadge} ${isActive ? styles.planBadge_active : ''}`}>
+        <span
+          className={classNames(styles.planBadge, {
+            [styles.planBadge_active]: isActive,
+          })}
+        >
           {planName.toUpperCase()} PLAN
         </span>
       </div>
@@ -31,15 +43,13 @@ export const CardPlan = (props: CardPlanProps) => {
         ))}
       </ul>
 
-      {alreadyHave ? (
-        <Button className={styles.current} disabled>
-          You already have this plan
-        </Button>
-      ) : (
-        <Button className={`${styles.upgrade} ${isActive ? styles.upgrade_active : ''}`} onClick={onClick}>
-          Get {planName.charAt(0).toUpperCase() + planName.slice(1)}
-        </Button>
-      )}
+      <UpgradeButton
+        index={index}
+        currentSubscriptionIndex={currentSubscriptionIndex}
+        isActive={isActive}
+        planName={planName}
+        onClick={onClick}
+      />
     </div>
   );
 };

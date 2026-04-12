@@ -1,0 +1,21 @@
+@use '@styles/helpers' as *;
+
+.promptInput {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 85%;
+  align-self: center;
+}
+
+.field {
+  width: 100%;
+}
+
+.field input {
+  color: var(--color-gray);
+  padding: rem(8) rem(12);
+  border: var(--border-gray);
+  border-radius: rem(100);
+  background-color: var(--color-black-200);
+}

@@ -10,6 +10,7 @@ import { Field } from '@shared/ui/Field';
 import { LoginCredentialsSchema, LoginDataDTO } from '@aichat/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import classNames from 'classnames';
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -59,8 +60,14 @@ export const LoginForm = () => {
       />
       {error && <p className={styles.error}>{error}</p>}
       <Button
-        className={`${styles.button} ${(errors.email ?? errors.password) ? styles.isInvalid : ''}`}
+        className={classNames(
+          styles.button,
+          {
+            [styles.isInvalid]: errors.email ?? errors.password,
+          },
+        )}
         type="submit"
+        gradient
         disabled={isPending}
       >
         {isPending ? 'Logging in...' : 'Login'}

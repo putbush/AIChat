@@ -7,3 +7,13 @@
   padding-bottom: rem(20);
   border-bottom: var(--border-gray);
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: rem(8);
+}
+
+.title {
+  color: var(--color-purple-secondary);
+}

@@ -22,7 +22,7 @@ export const UpgradePlanModal = observer(() => {
         <UpgradePlanList plans={plans} userData={data} toggleModal={toggleModal} />
       </div>
       <Button className={styles.close} onClick={toggleModal}>
-        <Image src="/cross.svg" alt="Close" width={24} height={24} />
+        <Image src="/icons/cross.svg" alt="Close" width={24} height={24} />
       </Button>
     </div>,
     document.body,

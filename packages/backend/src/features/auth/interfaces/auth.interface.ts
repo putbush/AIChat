@@ -1,7 +1,7 @@
 import { User } from '@prisma/client';
 import { Request, Response } from 'express';
 import { JwtPayload } from './jwt.payload';
-import { AuthResponse } from '@aichat/shared';
+import { AuthTokens } from '@aichat/shared';
 
 export interface IAuthService {
   register(
@@ -9,9 +9,9 @@ export interface IAuthService {
     name: string,
     email: string,
     password: string,
-  ): Promise<AuthResponse>;
-  login(res: Response, email: string, password: string): Promise<AuthResponse>;
-  refresh(req: Request, res: Response): Promise<AuthResponse>;
+  ): Promise<AuthTokens>;
+  login(res: Response, email: string, password: string): Promise<AuthTokens>;
+  refresh(req: Request, res: Response): Promise<AuthTokens>;
   // logout(res: Response): void;
   validateUser(payload: JwtPayload): Promise<User>;
 }

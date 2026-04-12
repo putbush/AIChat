@@ -6,21 +6,35 @@ import { Button } from '@shared/ui';
 import styles from './UserProfile.module.scss';
 import { getImageUrl } from '@shared/lib/imageUrl';
 import Image from 'next/image';
+import type { SidebarVariant } from '@shared/lib/sidebar/sidebarVariant';
+import classNames from 'classnames';
 
-type UserProfileProps = { isOpen: boolean; toggleUpgradeModal: () => void }
+type UserProfileProps = { variant: SidebarVariant; toggleUpgradeModal: () => void };
 
 export const UserProfile = (props: UserProfileProps) => {
-  const { isOpen, toggleUpgradeModal } = props;
+  const { variant, toggleUpgradeModal } = props;
   const { data, error } = useUser();
-
-  // if (isPending) {
-  //   return <UserProfileSkeleton isOpen={isOpen} />;
-  // }
+  const isExpanded = variant === 'expanded';
 
   if (error || !data) {
     return (
-      <Link href="/login" className={styles.profile}>
-        Login
+      <Link
+        href="/login"
+        className={classNames(styles.profile, styles.login, {
+          [styles.compact]: !isExpanded,
+        })}
+      >
+        {!isExpanded ? (
+          <>
+            <Image
+              src="/icons/unknown-user.svg"
+              className={styles.avatar}
+              alt="Default Avatar"
+              width={24}
+              height={24}
+            />
+          </>
+        ) : <span>Login</span>}
       </Link>
     );
   }
@@ -29,38 +43,32 @@ export const UserProfile = (props: UserProfileProps) => {
 
   const avatarSrc = avatarUrl ? getImageUrl(avatarUrl) : 'avatars/default.png';
 
-  if (!isOpen) {
-    return (
-      <div className={styles.profile}>
-        <UserIdentity
-          href="/profile"
-          avatarSrc={avatarSrc}
-          name={name}
-          email={email}
-          isOpen={false}
-        />
-      </div>
-    );
-  }
-
   return (
-    <div className={styles.profile}>
+    <div
+      className={classNames(styles.profile, {
+        [styles.compact]: !isExpanded,
+      })}
+    >
       <div className={styles.header}>
         <UserIdentity
           href="/profile"
           avatarSrc={avatarSrc}
           name={name}
           email={email}
-          isOpen
+          isOpen={isExpanded}
           className={styles.userIdentity}
         />
-        <span className={styles.subscriptionBadge}>{subscription.toUpperCase()}</span>
+        {isExpanded && (
+          <span className={styles.subscriptionBadge}>{subscription.toUpperCase()}</span>
+        )}
       </div>
 
-      <Button className={styles.upgrade} onClick={toggleUpgradeModal}>
-        <Image src="/upgrade.svg" alt="Upgrade Icon" width={20} height={20} />
-        <span className={styles.upgradeTitle}>Upgrade Plan</span>
-      </Button>
+      {isExpanded && (
+        <Button className={styles.upgrade} onClick={toggleUpgradeModal}>
+          <Image src="/icons/upgrade.svg" alt="Upgrade Icon" width={20} height={20} />
+          <span className={styles.upgradeTitle}>Upgrade Plan</span>
+        </Button>
+      )}
     </div>
   );
 };

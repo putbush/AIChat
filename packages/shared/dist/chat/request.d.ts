@@ -21,6 +21,7 @@ export declare const ChatCreateRequestSchema: z.ZodObject<{
         timestamp: Date;
     }>;
 }, "strip", z.ZodTypeAny, {
+    userId: string;
     message: {
         id: string;
         chatId: string;
@@ -28,8 +29,8 @@ export declare const ChatCreateRequestSchema: z.ZodObject<{
         content: string;
         timestamp: Date;
     };
-    userId: string;
 }, {
+    userId: string;
     message: {
         id: string;
         chatId: string;
@@ -37,6 +38,5 @@ export declare const ChatCreateRequestSchema: z.ZodObject<{
         content: string;
         timestamp: Date;
     };
-    userId: string;
 }>;
 export type ChatCreateRequest = z.infer<typeof ChatCreateRequestSchema>;

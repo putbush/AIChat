@@ -5,6 +5,35 @@
     font-size: fluid($max, $min);
 }
 
+@mixin gradient {
+  position: relative;
+  isolation: isolate;
+  color: var(--color-black-400);
+  background: var(--linear-gradient);
+  overflow: hidden;
+  transition: var(--transition-duration);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--linear-gradient-hover);
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    opacity: 0.95;
+    transform: translateY(rem(-1));
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+
 @mixin hide {
     opacity: 0;
     visibility: hidden;

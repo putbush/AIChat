@@ -8,7 +8,7 @@ export const buildApiResponse = async <T>(result: ResultRequest<T>) => {
   });
 
   if (result.tokens) {
-    await setAuthCookies(response, result.tokens);
+    await setAuthCookies(response.cookies, result.tokens);
   }
 
   return response;

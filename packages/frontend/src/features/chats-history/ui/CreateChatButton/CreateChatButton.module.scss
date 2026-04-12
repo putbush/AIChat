@@ -5,7 +5,7 @@
   justify-content: space-between;
   gap: rem(6);
   align-items: center;
-  color: var(--color-white-200);
+  color: var(--color-white);
   background-color: var(--color-black-300);
   padding: fluid(10, 7) fluid(14, 10);
   font-size: fluid(14, 11);
@@ -16,6 +16,11 @@
   &:hover {
     background-color: var(--color-gray);
   }
+}
+
+.compact {
+  justify-content: center;
+  padding: rem(6);
 }
 
 .buttonText {

@@ -12,7 +12,10 @@ export const handleApiRoute = async <T>(
   } catch (error) {
     if (error instanceof AxiosError) {
       return NextResponse.json(
-        { message: error.response?.data?.message ?? 'Internal server error' },
+        {
+          message: error.response?.data?.message ?? 'Internal server error',
+          details: error.response?.data?.details,
+        },
         { status: error.response?.status ?? 500 },
       );
     }

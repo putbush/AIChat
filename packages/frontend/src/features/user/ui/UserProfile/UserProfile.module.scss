@@ -3,10 +3,25 @@
 .profile {
   display: flex;
   flex-direction: column;
+  margin-top: auto;
   gap: fluid(18, 14);
   padding: fluid(14, 10);
   background-color: var(--color-black-100);
   border-radius: rem(12);
+}
+
+.compact {
+  gap: 0;
+  padding: rem(7);
+  border-radius: rem(10);
+}
+
+.login {
+  @include gradient;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: var(--transition-duration);
 }
 
 .header {
@@ -18,20 +33,6 @@
 
 .userIdentity {
   margin-right: auto;
-}
-
-.userButton {
-  display: flex;
-  align-items: center;
-  gap: fluid(8, 6);
-  text-decoration: none;
-  min-width: 0;
-  margin-right: auto;
-  transition: opacity var(--transition-duration);
-
-  &:hover {
-    opacity: 0.8;
-  }
 }
 
 .avatar {

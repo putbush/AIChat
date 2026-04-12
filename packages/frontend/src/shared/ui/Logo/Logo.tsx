@@ -1,12 +1,8 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import styles from './Logo.module.scss';
 
-export const Logo = () => {
+export const Logo = (props: { className?: string; width: number; height: number }) => {
+  const { width, height } = props;
   return (
-    <Link className={styles.logo} href="/">
-      <Image src="/logo.svg" alt="Logo" width={33} height={38} />
-      <h1 className={styles.title}>AI Chat</h1>
-    </Link>
+    <Image src="/icons/logo.svg" alt="Logo" width={width} height={height} className={props.className} />
   );
 };

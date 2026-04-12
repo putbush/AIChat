@@ -13,11 +13,12 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Authorizated, Authorization } from '@common/decorators';
-import { UserMapper } from '@common/mappers';
+import { SubscriptionMapper, UserMapper } from '@common/mappers';
 import type { User } from '@prisma/client';
 import type {
   User as UserResponse,
   AvatarUrlResponse,
+  SubscriptionResponse,
   SubscriptionType,
 } from '@aichat/shared';
 import type { IUserService } from './interfaces/user.interface';
@@ -38,9 +39,12 @@ export class UserController {
   @Post('subscription')
   async setSubscription(
     @Authorizated('id') id: string,
-    @Body('subscription') subscriptionData: SubscriptionType,
-  ): Promise<{ subscription: SubscriptionType }> {
-    return this.userService.setSubscription(id, subscriptionData);
+    @Body('subscription')
+    subscriptionData: SubscriptionType,
+  ): Promise<SubscriptionResponse> {
+    return SubscriptionMapper.toResponse(
+      await this.userService.setSubscription(id, subscriptionData),
+    );
   }
 
   @Authorization()

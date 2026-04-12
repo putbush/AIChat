@@ -1,7 +1,6 @@
 import type { SubscriptionType } from '@aichat/shared';
 import { PrismaService } from '@infra/prisma/prisma.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import type { Subscription } from '@prisma/client';
 import * as fs from 'fs';
 import path from 'path';
 
@@ -12,13 +11,13 @@ export class UserService {
   async setSubscription(
     id: string,
     subscriptionData: SubscriptionType,
-  ): Promise<{ subscription: SubscriptionType }> {
+  ): Promise<SubscriptionType> {
     const { subscription } = await this.prisma.user.update({
       where: { id },
-      data: { subscription: subscriptionData as Subscription },
+      data: { subscription: subscriptionData },
     });
 
-    return { subscription };
+    return subscription;
   }
 
   async setAvatar(

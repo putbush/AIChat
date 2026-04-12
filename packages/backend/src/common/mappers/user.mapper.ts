@@ -1,5 +1,6 @@
 import { User } from '@prisma/client';
 import { User as UserDto } from '@aichat/shared';
+import { SubscriptionMapper } from './subscription.mapper';
 
 export class UserMapper {
   static toDto(user: User): UserDto {
@@ -7,7 +8,7 @@ export class UserMapper {
       id: user.id,
       name: user.name,
       email: user.email,
-      subscription: user.subscription as UserDto['subscription'],
+      subscription: SubscriptionMapper.toDto(user.subscription),
       avatarUrl: user.avatarUrl ?? null,
     };
   }

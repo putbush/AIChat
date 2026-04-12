@@ -1,54 +1,58 @@
 'use server';
 
-import type { NextResponse } from 'next/server';
-import { TOKENS_KEYS } from './constants';
+import { TOKEN_KEYS } from '@shared/constants/auth';
 import { cookies } from 'next/headers';
+import { ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies';
+import type { AuthTokens } from '@aichat/shared';
+
+enum SameSite {
+  Lax = 'lax',
+  Strict = 'strict',
+  None = 'none',
+}
 
 const baseCookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax' as const,
+  sameSite: SameSite.Lax,
   path: '/',
 };
 
-export const setAuthCookies = async (
-  response: NextResponse,
-  tokens: {
-    accessToken?: string;
-    refreshToken?: string;
-  },
+const setTokens = async (
+  cookies: ResponseCookies,
+  tokens: Record<string, { value: string; maxAge: number }>,
 ) => {
-  if (tokens.accessToken) {
-    response.cookies.set(TOKENS_KEYS.ACCESS_TOKEN, tokens.accessToken, {
+  for (const [key, { value, maxAge }] of Object.entries(tokens)) {
+    cookies.set(key, value, {
       ...baseCookieOptions,
-      maxAge: 60 * 60 * 2,
-    });
-  }
-
-  if (tokens.refreshToken) {
-    response.cookies.set(TOKENS_KEYS.REFRESH_TOKEN, tokens.refreshToken, {
-      ...baseCookieOptions,
-      maxAge: 60 * 60 * 24 * 30,
+      maxAge,
     });
   }
 };
 
-export const getAuthTokensFromCookies = async (): Promise<{
-  accessToken: string | null;
-  refreshToken: string | null;
-}> => {
+export const setAuthCookies = async (
+  cookies: ResponseCookies,
+  tokens: AuthTokens,
+) => {
+  await setTokens(cookies, {
+    [TOKEN_KEYS.ACCESS_TOKEN]: { value: tokens.accessToken, maxAge: 60 * 60 * 2 },
+    [TOKEN_KEYS.REFRESH_TOKEN]: { value: tokens.refreshToken, maxAge: 60 * 60 * 24 * 30 },
+  });
+};
+
+export const getAuthTokensFromCookies = async (): Promise<Partial<AuthTokens>> => {
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get(TOKENS_KEYS.ACCESS_TOKEN)?.value ?? null;
-  const refreshToken = cookieStore.get(TOKENS_KEYS.REFRESH_TOKEN)?.value ?? null;
+  const accessToken = cookieStore.get(TOKEN_KEYS.ACCESS_TOKEN)?.value;
+  const refreshToken = cookieStore.get(TOKEN_KEYS.REFRESH_TOKEN)?.value;
   return { accessToken, refreshToken };
 };
 
 export const getAccessTokenFromCookies = async (): Promise<string | null> => {
   const cookieStore = await cookies();
-  return cookieStore.get(TOKENS_KEYS.ACCESS_TOKEN)?.value ?? null;
+  return cookieStore.get(TOKEN_KEYS.ACCESS_TOKEN)?.value ?? null;
 };
 
-export const clearAuthCookies = async (response: NextResponse) => {
-  response.cookies.delete('access_token');
-  response.cookies.delete('refresh_token');
+export const clearAuthCookies = async (cookies: ResponseCookies) => {
+  cookies.delete(TOKEN_KEYS.ACCESS_TOKEN);
+  cookies.delete(TOKEN_KEYS.REFRESH_TOKEN);
 };

@@ -1,16 +1,20 @@
 'use server';
 
-import type { User } from '@aichat/shared';
+import { UserSchema, type User } from '@aichat/shared';
 import { requestWithRefresh } from '@shared/api';
+import { BACKEND_API_PATHS } from '@shared/constants/routes';
 
 export const getUser = async (): Promise<User | null> => {
   try {
-    const response = await requestWithRefresh<User>({
-    method: 'GET',
-    url: '/user/profile',
-  });
+    const response = await requestWithRefresh(
+      {
+        method: 'GET',
+        url: BACKEND_API_PATHS.USER.PROFILE,
+      },
+      UserSchema,
+    );
 
-  return response.data;
+    return response.data;
   } catch {
     return null;
   }

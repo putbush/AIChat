@@ -4,7 +4,7 @@ export interface IUserService {
   setSubscription(
     id: string,
     subscriptionData: SubscriptionType,
-  ): Promise<{ subscription: SubscriptionType }>;
+  ): Promise<SubscriptionType>;
   setAvatar(
     id: string,
     file: Express.Multer.File,

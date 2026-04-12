@@ -1,21 +1,37 @@
 import type { Chat } from '@aichat/shared';
-import { DEFAULT_CHAT_NAME  } from '@shared/lib/constants';
+import { DEFAULT_CHAT_NAME } from '@entities/chat/constants';
 import styles from './HistoryItem.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
 import { memo } from 'react';
+import { Tooltip } from 'antd';
 
+type HistoryItemProps = {
+  chat: Chat;
+  isOpen: boolean;
+};
 
-const HistoryItemComponent = (props: { chat: Chat }) => {
-  const { chat } = props;
+const HistoryItemComponent = (props: HistoryItemProps) => {
+  const { chat, isOpen } = props;
+
+  const link = (
+    <Link href="" className={styles.item}>
+      <Image src="/icons/chat-icon.svg" alt="Chat icon" width={18} height={18} />
+      {isOpen && <span className={styles.title}>{chat.title || DEFAULT_CHAT_NAME}</span>}
+    </Link>
+  );
+
   return (
     <li>
-      <Link href="" className={styles.item}>
-        <Image src="/chat-icon.svg" alt="Chat icon" width={18} height={18} />
-        <span className={styles.title}>{chat.title || DEFAULT_CHAT_NAME}</span>
-      </Link>
+      {isOpen ? (
+        link
+      ) : (
+        <Tooltip title={chat.title || DEFAULT_CHAT_NAME} placement="right" mouseEnterDelay={0.15}>
+          {link}
+        </Tooltip>
+      )}
     </li>
   );
-}
+};
 
 export const HistoryItem = memo(HistoryItemComponent);

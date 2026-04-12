@@ -1,5 +1,5 @@
 import { z } from 'zod';
-export declare const AuthResponseSchema: z.ZodObject<{
+export declare const AuthTokensSchema: z.ZodObject<{
     accessToken: z.ZodString;
     refreshToken: z.ZodString;
 }, "strip", z.ZodTypeAny, {
@@ -9,4 +9,4 @@ export declare const AuthResponseSchema: z.ZodObject<{
     accessToken: string;
     refreshToken: string;
 }>;
-export type AuthResponse = z.infer<typeof AuthResponseSchema>;
+export type AuthTokens = z.infer<typeof AuthTokensSchema>;

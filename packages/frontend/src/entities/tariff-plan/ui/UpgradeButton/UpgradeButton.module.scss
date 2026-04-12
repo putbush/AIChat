@@ -1,0 +1,27 @@
+@use '@styles/helpers' as *;
+
+.current {
+  cursor: default;
+  padding-block: rem(13);
+  color: var(--color-white);
+  background-color: transparent;
+  opacity: 0.4;
+}
+
+.upgrade {
+  font-size: fluid(18, 14);
+  font-weight: 500;
+  padding-block: rem(13);
+  border-radius: rem(8);
+  background-color: var(--color-white);
+  transition: opacity var(--transition-duration);
+
+  &_active {
+    color: var(--color-black-400);
+    background: var(--linear-gradient);
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

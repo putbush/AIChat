@@ -9,11 +9,14 @@ import { SidebarFooter } from './SidebarFooter';
 import { sidebarStore } from '../model';
 import { upgradePlanModalStore } from '@widgets/upgrade-plan-modal/model';
 import { observer } from 'mobx-react';
+import type { SidebarVariant } from '@shared/lib/sidebar/sidebarVariant';
 import styles from './ChatsSidebar.module.scss';
+import classNames from 'classnames';
 
 export const ChatsSidebar = observer(() => {
   const { isOpen, toggleSidebar, setIsOpen } = sidebarStore;
   const { toggleModal } = upgradePlanModalStore;
+  const variant: SidebarVariant = isOpen ? 'expanded' : 'compact';
 
   useEffect(() => {
     const mobileMediaQuery = window.matchMedia('(max-width: 767.98px)');
@@ -34,23 +37,18 @@ export const ChatsSidebar = observer(() => {
 
   return (
     <>
-      <aside className={`${styles.sidebar} ${!isOpen ? styles.closed : ''}`}>
-        {isOpen ? (
-          <>
-            <SidebarHeader toggleSidebar={toggleSidebar} />
+      <aside
+        className={classNames(styles.sidebar, {
+          [styles.closed]: !isOpen,
+        })}
+      >
+        <SidebarHeader variant={variant} toggleSidebar={toggleSidebar} />
 
-            <CreateChatButton />
-            <HistoryList />
-            <UserProfile isOpen={isOpen} toggleUpgradeModal={toggleModal} />
+        <CreateChatButton variant={variant} />
+        <HistoryList variant={variant} />
+        <UserProfile variant={variant} toggleUpgradeModal={toggleModal} />
 
-            <SidebarFooter />
-          </>
-        ) : (
-          <>
-            <ToggleSidebar onClick={toggleSidebar} />
-            <UserProfile isOpen={isOpen} toggleUpgradeModal={toggleModal} />
-          </>
-        )}
+        {isOpen && <SidebarFooter />}
       </aside>
       {!isOpen && (
         <div className={styles.mobileBurger}>

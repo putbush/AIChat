@@ -5,10 +5,10 @@ import {
   RegistrationDataSchema,
 } from '@aichat/shared';
 import { Body, Controller, Inject, Post, Req, Res } from '@nestjs/common';
-import { ZodExceptionPipe } from 'src/common/pipes';
+import { ZodExceptionPipe } from '@common/pipes';
 import type { Request, Response } from 'express';
 import type { IAuthService } from './interfaces/auth.interface';
-import type { AuthResponse } from '@aichat/shared';
+import type { AuthTokens } from '@aichat/shared';
 
 @Controller('auth')
 export class AuthController {
@@ -21,7 +21,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Body(new ZodExceptionPipe(RegistrationDataSchema))
     registrationDto: RegistrationDataDTO,
-  ): Promise<AuthResponse> {
+  ): Promise<AuthTokens> {
     const { name, email, password } = registrationDto;
 
     return await this.authService.register(res, name, email, password);
@@ -32,7 +32,7 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Body(new ZodExceptionPipe(LoginCredentialsSchema))
     loginDto: LoginDataDTO,
-  ): Promise<AuthResponse> {
+  ): Promise<AuthTokens> {
     const { email, password } = loginDto;
 
     return await this.authService.login(res, email, password);
@@ -42,7 +42,7 @@ export class AuthController {
   async refresh(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<AuthResponse> {
+  ): Promise<AuthTokens> {
     return await this.authService.refresh(req, res);
   }
 

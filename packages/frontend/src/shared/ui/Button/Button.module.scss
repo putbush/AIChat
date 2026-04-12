@@ -6,3 +6,7 @@
   min-height: rem(40);
   padding-inline: rem(14);
 }
+
+.gradient {
+  @include gradient;
+}

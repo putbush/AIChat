@@ -90,7 +90,6 @@ p:where(:not([class]):not(:last-child)) {
 img,
 video {
   display: block;
-  max-width: 100%;
 }
 
 /**

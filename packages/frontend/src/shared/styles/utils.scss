@@ -5,6 +5,10 @@
   @include visually-hidden;
 }
 
+.hide {
+  @include hide;
+}
+
 .hidden-mobile {
   @include mobile {
     display: none !important;

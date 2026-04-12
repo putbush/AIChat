@@ -8,7 +8,7 @@
   height: rem(36);
   padding: 0;
   background-color: var(--color-black-200);
-  border-radius: 50%;
+  border-radius: rem(10);
   cursor: pointer;
 
   &:hover {

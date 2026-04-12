@@ -1,7 +1,6 @@
 import { z } from 'zod';
 
 export const SubscriptionLevel = z.enum(['free', 'plus', 'pro']);
-
 export type SubscriptionType = z.infer<typeof SubscriptionLevel>;
 
 export const UserSchema = z.object({
@@ -12,4 +11,9 @@ export const UserSchema = z.object({
   subscription: SubscriptionLevel,
 });
 
+export const SubscriptionResponseSchema = z.object({
+  subscription: SubscriptionLevel,
+});
+
 export type User = z.infer<typeof UserSchema>;
+export type SubscriptionResponse = z.infer<typeof SubscriptionResponseSchema>;

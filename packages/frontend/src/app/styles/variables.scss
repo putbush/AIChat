@@ -4,11 +4,11 @@
   --color-black-100: #1e1e1e;
   --color-black-200: #181818;
   --color-gray: #333333;
-  --color-white-100: #dedede;
   --color-light-blue-primary: #65e2fe;
-  --color-white-200: #fff;
   --color-purple-secondary: #a886f8;
   --color-white: #fff;
+  --color-white-100: #dedede;
+  --color-white-200: #828282;
   --color-white-300: #888;
   --color-white-400: #3b3b3b;
   --color-green: #27AE60;
@@ -19,6 +19,7 @@
   --border-gray: var(--color-gray) 1px solid;
 
   --linear-gradient: linear-gradient(84deg, var(--color-purple-secondary) 0%, var(--color-light-blue-primary) 100%);
+  --linear-gradient-hover: linear-gradient(84deg, var(--color-light-blue-primary) 0%, var(--color-purple-secondary) 100%);
 
   --transition-duration: 0.2s;
 }

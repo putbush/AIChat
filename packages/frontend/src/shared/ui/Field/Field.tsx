@@ -3,6 +3,7 @@ import styles from './Field.module.scss';
 import { InputHTMLAttributes, useCallback, useState } from 'react';
 import { Button } from '../Button';
 import Image from 'next/image';
+import classNames from 'classnames';
 
 interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -20,7 +21,7 @@ export const Field = (props: FieldProps) => {
 
   const { label, placeholder, className, id, ariaDescribedby, error, register } = props;
   return (
-    <div className={`${styles.formGroup} ${className}`}>
+    <div className={classNames(styles.formGroup, className)}>
       <div className={styles.inputWrap}>
         <label htmlFor={id} className="visually-hidden">
           {label}
@@ -28,7 +29,9 @@ export const Field = (props: FieldProps) => {
         <input
           type={inputType}
           id={id}
-          className={`${styles.input} ${error ? styles.isInvalid : ''}`}
+          className={classNames(styles.input, {
+            [styles.isInvalid]: error,
+          })}
           placeholder={placeholder}
           aria-describedby={ariaDescribedby}
           {...register}
@@ -42,7 +45,7 @@ export const Field = (props: FieldProps) => {
             onClick={togglePasswordVisibility}
           >
             <Image
-              src={showPassword ? '/eye-off.svg' : '/eye.svg'}
+              src={showPassword ? '/icons/eye.svg' : '/icons/eye-off.svg'}
               alt="Toggle Password Visibility"
               width={20}
               height={20}

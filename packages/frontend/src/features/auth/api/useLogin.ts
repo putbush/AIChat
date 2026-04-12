@@ -1,14 +1,18 @@
-import type { AuthResponse, LoginDataDTO } from '@aichat/shared';
+import type { AuthTokens, LoginDataDTO } from '@aichat/shared';
 import { apiClient } from '@shared/api/axios';
+import { FRONTEND_API_PATHS } from '@shared/constants/routes';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (credentials: LoginDataDTO): Promise<AuthResponse> => {
+    mutationFn: async (credentials: LoginDataDTO): Promise<AuthTokens> => {
       try {
-        const { data } = await apiClient.post<AuthResponse>('/auth/login', credentials);
+        const { data } = await apiClient.post<AuthTokens>(
+          FRONTEND_API_PATHS.AUTH.LOGIN,
+          credentials,
+        );
         return data;
       } catch (error) {
         if (isAxiosError(error) && error.response?.status === 401) {

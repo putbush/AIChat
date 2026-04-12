@@ -1,8 +1,16 @@
+import { SubscriptionType } from '@aichat/shared';
 import { makeAutoObservable } from 'mobx';
+
+type Plan = {
+  cost: string;
+  name: SubscriptionType;
+  subTitle: string;
+  features: string[];
+};
 
 class UpgradePlanModalStore {
   isOpen: boolean = false;
-  plans = [
+  plans: Plan[] = [
     {
       cost: '0',
       name: 'free',

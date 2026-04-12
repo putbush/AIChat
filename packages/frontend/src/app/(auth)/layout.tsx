@@ -1,3 +1,4 @@
+import { Logo } from '@shared/ui';
 import styles from './layout.module.scss';
 import Image from 'next/image';
 
@@ -16,7 +17,7 @@ export default function AuthLayout({
         height={860}
       />
       <div className={styles.loginContainer}>
-        <Image src="logo.svg" alt="Logo" width={80} height={80} />
+        <Logo width={70} height={80} />
         <div className={styles.loginHeader}>
           <h3 className={styles.loginTitle}>Join AIChat</h3>
           <p className={styles.loginDescription}>
