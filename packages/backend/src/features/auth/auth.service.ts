@@ -8,7 +8,11 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { hash, verify } from 'argon2';
 import type { Request, Response } from 'express';
-import { ERROR_MESSAGES, RESRESH_TOKEN_COOKIE_NAME } from '@common/constants';
+import {
+  CONFIG_KEYS,
+  ERROR_MESSAGES,
+  REFRESH_TOKEN_COOKIE_NAME,
+} from '@common/constants';
 import { JwtPayload } from './interfaces/jwt.payload';
 import { User } from '@prisma/client';
 import { AuthTokens } from '@aichat/shared';
@@ -23,10 +27,11 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly jwt: JwtService,
   ) {
-    this.JWT_ACCESS_TOKEN_TTL =
-      this.configService.getOrThrow<number>('jwt.accessTokenTtl');
+    this.JWT_ACCESS_TOKEN_TTL = this.configService.getOrThrow<number>(
+      CONFIG_KEYS.JWT.ACCESS_TOKEN_TTL,
+    );
     this.JWT_REFRESH_TOKEN_TTL = this.configService.getOrThrow<number>(
-      'jwt.refreshTokenTtl',
+      CONFIG_KEYS.JWT.REFRESH_TOKEN_TTL,
     );
   }
 
@@ -78,7 +83,7 @@ export class AuthService {
   }
 
   async refresh(req: Request, res: Response): Promise<AuthTokens> {
-    const refreshToken = req.cookies[RESRESH_TOKEN_COOKIE_NAME] as string;
+    const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE_NAME] as string;
 
     if (!refreshToken) {
       throw new UnauthorizedException(

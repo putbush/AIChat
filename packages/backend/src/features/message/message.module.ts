@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { MessageController } from './message.controller';
-import { ChatService } from '@features/chat/chat.service';
+import { ChatModule } from '@features/chat/chat.module';
+import { AiModule } from '@infra/ai/ai.module';
 
 @Module({
+  imports: [ChatModule, AiModule],
   controllers: [MessageController],
   providers: [
     {
       provide: 'IMessageService',
       useClass: MessageService,
     },
-    ChatService,
   ],
 })
 export class MessageModule {}

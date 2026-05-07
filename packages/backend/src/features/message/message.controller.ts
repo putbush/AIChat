@@ -9,6 +9,7 @@ import {
   Param,
   Post,
   Query,
+  Res,
 } from '@nestjs/common';
 import { Authorizated, Authorization } from '@common/decorators';
 import {
@@ -19,6 +20,9 @@ import {
 import { ZodExceptionPipe } from '@common/pipes';
 import type { IMessageService } from './interfaces/message.interface';
 import { MessageMapper } from '@common/mappers';
+import { type Response } from 'express';
+import { setStreamHeaders } from '@common/utils';
+import { MESSAGE_HISTORY_LIMIT } from './message.constants';
 
 @Controller('message')
 export class MessageController {
@@ -32,16 +36,23 @@ export class MessageController {
     @Authorizated('id') userId: string,
     @Body(new ZodExceptionPipe(CreateMessageSchema))
     createMessageDto: CreateMessage,
-  ): Promise<Message> {
+    @Res() res: Response,
+  ): Promise<void> {
+    setStreamHeaders(res);
+
     const { content, chatId } = createMessageDto;
 
-    const message = await this.messageService.createMessage(
+    const stream = this.messageService.sendMessageStream(
       userId,
       content,
       chatId,
     );
 
-    return MessageMapper.toDto(message);
+    for await (const chunk of stream) {
+      res.write(chunk);
+    }
+
+    res.end();
   }
 
   @Authorization()
@@ -49,7 +60,12 @@ export class MessageController {
   async getMessages(
     @Authorizated('id') userId: string,
     @Param('chatId', ParseUUIDPipe) chatId: string,
-    @Query('limit', new DefaultValuePipe(20), ParseIntPipe) limit: number,
+    @Query(
+      'limit',
+      new DefaultValuePipe(MESSAGE_HISTORY_LIMIT.DEFAULT),
+      ParseIntPipe,
+    )
+    limit: number,
   ): Promise<Message[]> {
     const messages = await this.messageService.getMessages(
       userId,

@@ -10,5 +10,6 @@ import { ChatController } from './chat.controller';
       useClass: ChatService,
     },
   ],
+  exports: ['IChatService'],
 })
 export class ChatModule {}

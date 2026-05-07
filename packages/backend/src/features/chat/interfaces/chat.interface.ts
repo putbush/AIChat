@@ -1,11 +1,16 @@
 import { Chat } from '@prisma/client';
 
+export type GetOrCreateChatResult = {
+  chat: Chat;
+  isCreated: boolean;
+};
+
 export interface IChatService {
   getAllChats(id: string): Promise<Chat[]>;
   getUserChatOrThrow(userId: string, chatId: string): Promise<Chat>;
   getOrCreateForUser(
     userId: string,
-    chatId: string,
     message: string,
-  ): Promise<Chat>;
+    chatId?: string,
+  ): Promise<GetOrCreateChatResult>;
 }

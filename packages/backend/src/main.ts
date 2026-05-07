@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import cookieParser from 'cookie-parser';
+import { CONFIG_KEYS } from '@common/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +16,6 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
 
-  await app.listen(config.getOrThrow<number>('app.port') || 5000);
+  await app.listen(config.getOrThrow(CONFIG_KEYS.APP.PORT) || 5000);
 }
 void bootstrap();

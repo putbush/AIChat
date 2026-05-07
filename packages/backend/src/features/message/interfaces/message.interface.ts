@@ -6,9 +6,9 @@ export interface IMessageService {
     chatId: string,
     limit: number,
   ): Promise<Message[]>;
-  createMessage(
+  sendMessageStream(
     userId: string,
     content: string,
     chatId?: string,
-  ): Promise<Message>;
+  ): AsyncIterable<string>;
 }

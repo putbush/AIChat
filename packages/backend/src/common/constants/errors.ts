@@ -12,4 +12,6 @@ export const ERROR_MESSAGES = {
   AVATAR_INVALID_FILE_TYPE:
     'Only image files are allowed (jpg, jpeg, png, webp)',
   AVATAR_FILE_TOO_LARGE: 'File size should not exceed 5MB',
+  AI_PROVIDER_UNSUPPORTED: (provider: string = 'provider not specified') =>
+    `Unsupported AI provider: ${provider}`,
 } as const;

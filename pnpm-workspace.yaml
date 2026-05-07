@@ -6,9 +6,11 @@ ignoredBuiltDependencies:
   - prisma
 
 onlyBuiltDependencies:
+  - '@google/genai'
   - '@nestjs/core'
   - '@parcel/watcher'
   - argon2
   - esbuild
+  - protobufjs
   - sharp
   - unrs-resolver

@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '@infra/prisma/prisma.service';
-import { IChatService } from './interfaces/chat.interface';
+import {
+  GetOrCreateChatResult,
+  IChatService,
+} from './interfaces/chat.interface';
 import { Chat } from '@prisma/client';
 import { ERROR_MESSAGES } from '@common/constants';
 import { createTitle } from '@common/utils';
@@ -36,7 +39,7 @@ export class ChatService implements IChatService {
     userId: string,
     message: string,
     chatId?: string,
-  ): Promise<Chat> {
+  ): Promise<GetOrCreateChatResult> {
     if (chatId) {
       const existingChat = await this.prisma.chat.findFirst({
         where: { id: chatId, userID: userId },
@@ -46,16 +49,17 @@ export class ChatService implements IChatService {
         throw new NotFoundException(ERROR_MESSAGES.CHAT_NOT_FOUND);
       }
 
-      return existingChat;
+      return { chat: existingChat, isCreated: false };
     }
 
     const title = createTitle(message);
 
-    return this.prisma.chat.create({
+    const chat = await this.prisma.chat.create({
       data: {
         userID: userId,
         title,
       },
     });
+    return { chat, isCreated: true };
   }
 }

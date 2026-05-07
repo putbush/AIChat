@@ -6,7 +6,9 @@ export default () => ({
     nodeEnv: process.env.NODE_ENV || 'development',
   },
   database: {
-    url: process.env.DATABASE_URL || 'postgresql://localhost:5432/links',
+    url:
+      process.env.DATABASE_URL ||
+      'postgresql://postgres:12345@localhost:5432/postgres',
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'default_secret',
@@ -17,5 +19,11 @@ export default () => ({
       process.env.JWT_REFRESH_TOKEN_TTL || '7d',
     ),
     algorithm: 'HS256' as const,
+  },
+  ai: {
+    provider: process.env.AI_PROVIDER || 'gemini',
+    gemini: {
+      apiKey: process.env.GEMINI_API_KEY,
+    },
   },
 });

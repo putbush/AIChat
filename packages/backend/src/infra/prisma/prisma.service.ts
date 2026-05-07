@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool, PoolConfig } from 'pg';
 import { ConfigService } from '@nestjs/config';
+import { CONFIG_KEYS } from '@common/constants';
 
 @Injectable()
 export class PrismaService
@@ -10,7 +11,9 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   constructor(private configService: ConfigService) {
-    const connectionString = configService.get<string>('database.url');
+    const connectionString = configService.get<string>(
+      CONFIG_KEYS.DATABASE.URL,
+    );
 
     const poolConfig: PoolConfig = { connectionString };
 
