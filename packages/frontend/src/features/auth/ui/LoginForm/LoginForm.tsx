@@ -11,6 +11,7 @@ import { LoginCredentialsSchema, LoginDataDTO } from '@aichat/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import classNames from 'classnames';
+import { LINK_PATHS } from '@shared/constants/routes';
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ export const LoginForm = () => {
     setError(null);
     mutate(data, {
       onSuccess: () => {
-        router.push('/');
+        router.push(LINK_PATHS.HOME);
       },
       onError: (error) => {
         setError(error.message);
@@ -73,7 +74,7 @@ export const LoginForm = () => {
         {isPending ? 'Logging in...' : 'Login'}
       </Button>
       <span className={styles.line}></span>
-      <Link href="/register" className={styles.link}>
+      <Link href={LINK_PATHS.REGISTER} className={styles.link}>
         Don&apos;t have an account? Sign up
       </Link>
     </form>

@@ -1,0 +1,56 @@
+@use '@styles/helpers' as *;
+
+.scrollArea {
+  position: relative;
+  z-index: var(--z-chat-content);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: fluid(96, 72) var(--chat-shell-padding)
+    calc(var(--chat-bottom-backdrop-height) + rem(32));
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: rem(32);
+
+  width: min(100%, var(--chat-content-width));
+  margin-inline: auto;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loadingSpinner {
+  :global(.ant-spin-dot) {
+    color: var(--color-purple-secondary);
+  }
+}
+
+.error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: rem(16);
+  align-items: center;
+}
+
+.errorMessage {
+  font-weight: 500;
+  color: var(--color-purple-secondary);
+}
+
+.errorButton {
+  @include frosted-glass();
+
+  padding: rem(8) rem(48);
+  color: var(--color-white);
+}

@@ -3,6 +3,7 @@ import { PrismaService } from '@infra/prisma/prisma.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import path from 'path';
+import { ERROR_MESSAGES } from '@common/constants';
 
 @Injectable()
 export class UserService {
@@ -25,7 +26,7 @@ export class UserService {
     file: Express.Multer.File,
   ): Promise<{ avatarUrl: string }> {
     if (!file) {
-      throw new BadRequestException('No avatar uploaded');
+      throw new BadRequestException(ERROR_MESSAGES.USER_NO_AVATAR);
     }
 
     const filePath = this.uploadAvatar(id, file);

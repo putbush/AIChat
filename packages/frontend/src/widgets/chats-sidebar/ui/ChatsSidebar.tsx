@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { SidebarHeader } from './SidebarHeader';
 import { ToggleSidebar } from './ToggleSidebar';
-import { CreateChatButton, HistoryList } from '@features/chats-history';
+import { CreateChatButton, ChatsHistory } from '@features/chats-history';
 import { UserProfile } from '@features/user';
 import { SidebarFooter } from './SidebarFooter';
 import { sidebarStore } from '../model';
@@ -45,7 +45,7 @@ export const ChatsSidebar = observer(() => {
         <SidebarHeader variant={variant} toggleSidebar={toggleSidebar} />
 
         <CreateChatButton variant={variant} />
-        <HistoryList variant={variant} />
+        <ChatsHistory variant={variant} />
         <UserProfile variant={variant} toggleUpgradeModal={toggleModal} />
 
         {isOpen && <SidebarFooter />}

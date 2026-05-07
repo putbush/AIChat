@@ -1,10 +1,10 @@
-import { SubscriptionResponse, SubscriptionResponseSchema } from '@aichat/shared';
-import { buildApiResponse, requestWithRefresh } from '@shared/api';
+import { SubscriptionResponseSchema } from '@aichat/shared';
+import { buildApiResponse, requestWithRefresh } from '@shared/api/server';
 import { BACKEND_API_PATHS } from '@shared/constants/routes';
 import { handleApiRoute } from '@shared/lib/handleApiRoute';
 
 export const POST = async (req: Request) => {
-  return handleApiRoute<SubscriptionResponse>(
+  return handleApiRoute(
     async () => {
       const body = await req.json();
       const response = await requestWithRefresh(
@@ -17,6 +17,6 @@ export const POST = async (req: Request) => {
       );
       return response;
     },
-    async (response) => await buildApiResponse<SubscriptionResponse>(response),
+    async (response) => await buildApiResponse(response),
   );
 };

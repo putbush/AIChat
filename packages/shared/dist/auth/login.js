@@ -2,7 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginCredentialsSchema = void 0;
 const zod_1 = require("zod");
+const errors_1 = require("../common/errors");
 exports.LoginCredentialsSchema = zod_1.z.object({
-    email: zod_1.z.string().email("Please, input a valid email address"),
-    password: zod_1.z.string().regex(/^[A-Za-z0-9]+$/, 'Password must contain only letters and numbers').min(6),
+    email: zod_1.z.string().email(errors_1.SHARED_VALIDATION_ERRORS.INVALID_EMAIL),
+    password: zod_1.z
+        .string()
+        .regex(/^[A-Za-z0-9]+$/, errors_1.SHARED_VALIDATION_ERRORS.PASSWORD_ALNUM_ONLY)
+        .min(6),
 });

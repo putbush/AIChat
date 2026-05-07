@@ -18,7 +18,4 @@ export default () => ({
     ),
     algorithm: 'HS256' as const,
   },
-  cookie: {
-    domain: process.env.COOKIE_DOMAIN || 'localhost',
-  },
 });

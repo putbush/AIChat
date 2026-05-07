@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect } from 'react';
 import type { SidebarVariant } from '@shared/lib/sidebar/sidebarVariant';
 import classNames from 'classnames';
+import { LINK_PATHS } from '@shared/constants/routes';
 
 type CreateChatButtonProps = {
   variant: SidebarVariant;
@@ -18,7 +19,7 @@ export const CreateChatButton = (props: CreateChatButtonProps) => {
   const isExpanded = variant === 'expanded';
 
   const onSubmit = useCallback(() => {
-    router.push('/');
+    router.push(LINK_PATHS.HOME);
   }, [router]);
 
   useEffect(() => {

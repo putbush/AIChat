@@ -3,6 +3,7 @@
 .userButton {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: fluid(8, 6);
   text-decoration: none;
   min-width: 0;
@@ -41,3 +42,4 @@
   overflow: hidden;
   white-space: nowrap;
 }
+

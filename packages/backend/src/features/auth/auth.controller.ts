@@ -45,10 +45,4 @@ export class AuthController {
   ): Promise<AuthTokens> {
     return await this.authService.refresh(req, res);
   }
-
-  // @Post('logout')
-  // @HttpCode(HttpStatus.OK)
-  // logout(@Res({ passthrough: true }) res: Response) {
-  //   return this.authService.logout(res);
-  // }
 }

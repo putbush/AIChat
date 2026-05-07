@@ -1,44 +1,50 @@
 @use '@styles/helpers' as *;
 
 .sidebar {
+  --sidebar-space-20: #{rem(20)};
+  --sidebar-space-30: #{rem(30)};
+  --sidebar-width-expanded: #{rem(290)};
+  --sidebar-width-compact: #{rem(60)};
+  --sidebar-mobile-offset: #{rem(56)};
+
   display: flex;
   flex-direction: column;
-  gap: rem(30);
-  padding: rem(20);
+  gap: var(--sidebar-space-30);
+  padding: var(--sidebar-space-20);
   width: fluid(290, 200);
   min-width: fluid(290, 200);
   background-color: var(--color-black-200);
   border-right: var(--border);
   overflow: hidden;
-  z-index: 1000;
+  z-index: var(--z-sidebar);
   transition: width 0.3s ease, min-width 0.3s ease, padding 0.3s ease;
 
   @include mobile {
     position: fixed;
     inset: 0 auto 0 0;
-    width: min(rem(290), calc(100vw - rem(56)));
-    min-width: min(rem(290), calc(100vw - rem(56)));
-    max-width: calc(100vw - rem(56));
+    width: min(var(--sidebar-width-expanded), calc(100vw - var(--sidebar-mobile-offset)));
+    min-width: min(var(--sidebar-width-expanded), calc(100vw - var(--sidebar-mobile-offset)));
+    max-width: calc(100vw - var(--sidebar-mobile-offset));
     box-shadow: rem(8) 0 rem(24) rgba(0, 0, 0, 0.35);
     transform: translateX(0);
     transition: transform 0.3s ease;
-    z-index: 1200;
+    z-index: var(--z-sidebar);
   }
 }
 
 .closed {
   display: flex;
   flex-direction: column;
-  gap: rem(30);
-  width: rem(60);
-  min-width: rem(60);
-  padding: rem(20) rem(5);
+  gap: var(--sidebar-space-30);
+  width: var(--sidebar-width-compact);
+  min-width: var(--sidebar-width-compact);
+  padding: var(--sidebar-space-20) rem(5);
   align-items: center;
 
   @include mobile {
-    width: min(rem(290), calc(100vw - rem(56)));
-    min-width: min(rem(290), calc(100vw - rem(56)));
-    padding: rem(20);
+    width: min(var(--sidebar-width-expanded), calc(100vw - var(--sidebar-mobile-offset)));
+    min-width: min(var(--sidebar-width-expanded), calc(100vw - var(--sidebar-mobile-offset)));
+    padding: var(--sidebar-space-20);
     align-items: stretch;
     justify-content: flex-start;
     transform: translateX(calc(-100% - rem(12)));
@@ -53,6 +59,6 @@
     position: fixed;
     top: rem(16);
     left: rem(16);
-    z-index: 1101;
+    z-index: var(--z-sidebar);
   }
 }

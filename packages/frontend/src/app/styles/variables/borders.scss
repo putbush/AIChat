@@ -1,0 +1,6 @@
+@use '@styles/helpers' as *;
+
+:root {
+  --border-black-100: var(--color-black-100) 1px solid;
+  --border-gray: var(--color-gray) 1px solid;
+}

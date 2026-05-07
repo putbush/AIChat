@@ -21,7 +21,9 @@ import type {
   SubscriptionResponse,
   SubscriptionType,
 } from '@aichat/shared';
+import type { Express } from 'express';
 import type { IUserService } from './interfaces/user.interface';
+import { ERROR_MESSAGES } from '@common/constants';
 
 @Controller('user')
 export class UserController {
@@ -56,11 +58,11 @@ export class UserController {
         validators: [
           new FileTypeValidator({
             fileType: /\/(jpg|jpeg|png|webp)$/,
-            errorMessage: 'Only image files are allowed (jpg, jpeg, png, webp)',
+            errorMessage: ERROR_MESSAGES.AVATAR_INVALID_FILE_TYPE,
           }),
           new MaxFileSizeValidator({
             maxSize: 5 * 1024 * 1024,
-            errorMessage: 'File size should not exceed 5MB',
+            errorMessage: ERROR_MESSAGES.AVATAR_FILE_TOO_LARGE,
           }),
         ],
       }),

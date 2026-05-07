@@ -12,6 +12,6 @@ export interface IAuthService {
   ): Promise<AuthTokens>;
   login(res: Response, email: string, password: string): Promise<AuthTokens>;
   refresh(req: Request, res: Response): Promise<AuthTokens>;
-  // logout(res: Response): void;
+
   validateUser(payload: JwtPayload): Promise<User>;
 }

@@ -1,0 +1,10 @@
+@use '@styles/helpers' as *;
+
+:root {
+  --z-page-background: 0;
+  --z-chat-content: 1;
+  --z-chat-backdrop: 2;
+  --z-chat-floating: 3;
+  --z-sidebar: 10;
+  --z-modal: 20;
+}

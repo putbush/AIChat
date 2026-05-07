@@ -1,11 +1,11 @@
-import { User, UserSchema } from '@aichat/shared';
-import { requestWithRefresh } from '@shared/api';
-import { buildApiResponse } from '@shared/api/buildApiResponse';
+import { UserSchema } from '@aichat/shared';
+import { requestWithRefresh } from '@shared/api/server';
+import { buildApiResponse } from '@shared/api/server/buildApiResponse';
 import { BACKEND_API_PATHS } from '@shared/constants/routes';
 import { handleApiRoute } from '@shared/lib/handleApiRoute';
 
 export const GET = async () => {
-  return handleApiRoute<User>(
+  return handleApiRoute(
     async () => {
       const response = await requestWithRefresh(
         {
@@ -16,6 +16,6 @@ export const GET = async () => {
       );
       return response;
     },
-    async (response) => await buildApiResponse<User>(response),
+    async (response) => await buildApiResponse(response),
   );
 };

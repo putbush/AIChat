@@ -7,17 +7,13 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = (props: ButtonProps) => {
-  const { children, className, type, disabled, 'aria-label': ariaLabel, 'aria-pressed': ariaPressed, onClick, gradient } = props;
+  const { children, className, gradient, ...rest } = props;
   return (
     <button
-      type={type}
       className={classNames(styles.button, className, {
         [styles.gradient]: gradient,
       })}
-      aria-label={ariaLabel}
-      aria-pressed={ariaPressed}
-      onClick={onClick}
-      disabled={disabled}
+      {...rest}
     >
       {children}
     </button>

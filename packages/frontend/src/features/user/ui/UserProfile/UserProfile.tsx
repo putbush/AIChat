@@ -8,6 +8,7 @@ import { getImageUrl } from '@shared/lib/imageUrl';
 import Image from 'next/image';
 import type { SidebarVariant } from '@shared/lib/sidebar/sidebarVariant';
 import classNames from 'classnames';
+import { LINK_PATHS } from '@shared/constants/routes';
 
 type UserProfileProps = { variant: SidebarVariant; toggleUpgradeModal: () => void };
 
@@ -19,7 +20,7 @@ export const UserProfile = (props: UserProfileProps) => {
   if (error || !data) {
     return (
       <Link
-        href="/login"
+        href={LINK_PATHS.LOGIN}
         className={classNames(styles.profile, styles.login, {
           [styles.compact]: !isExpanded,
         })}
@@ -41,7 +42,7 @@ export const UserProfile = (props: UserProfileProps) => {
 
   const { name, email, subscription, avatarUrl } = data;
 
-  const avatarSrc = avatarUrl ? getImageUrl(avatarUrl) : 'avatars/default.png';
+  const avatarSrc = avatarUrl ? getImageUrl(avatarUrl) : '/avatars/default.png';
 
   return (
     <div
@@ -51,7 +52,7 @@ export const UserProfile = (props: UserProfileProps) => {
     >
       <div className={styles.header}>
         <UserIdentity
-          href="/profile"
+          href={LINK_PATHS.PROFILE}
           avatarSrc={avatarSrc}
           name={name}
           email={email}

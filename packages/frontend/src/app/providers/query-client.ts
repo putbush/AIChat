@@ -1,9 +1,10 @@
 import { QueryClient } from '@tanstack/react-query';
+import { QUERY_CLIENT } from './query-client.constants';
 
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
-      queries: { staleTime: 60 * 1000, retry: 1, enabled: typeof window !== 'undefined' },
+      queries: { staleTime: QUERY_CLIENT.STALE_TIME, retry: QUERY_CLIENT.RETRY_COUNT },
     },
   });
 }

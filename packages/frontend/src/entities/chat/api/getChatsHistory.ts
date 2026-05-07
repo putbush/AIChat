@@ -1,7 +1,7 @@
 'use server';
 
 import { ChatsSchema, type Chat } from '@aichat/shared';
-import { requestWithRefresh } from '@shared/api';
+import { requestWithRefresh } from '@shared/api/server';
 import { BACKEND_API_PATHS } from '@shared/constants/routes';
 
 export const getChatsHistory = async (): Promise<Chat[] | null> => {
@@ -9,7 +9,7 @@ export const getChatsHistory = async (): Promise<Chat[] | null> => {
     const response = await requestWithRefresh(
       {
         method: 'GET',
-        url: BACKEND_API_PATHS.CHATS.LIST,
+        url: BACKEND_API_PATHS.CHAT.LIST,
       },
       ChatsSchema,
     );

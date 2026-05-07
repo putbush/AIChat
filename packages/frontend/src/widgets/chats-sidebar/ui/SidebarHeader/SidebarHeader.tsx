@@ -3,6 +3,7 @@ import { ToggleSidebar } from '../ToggleSidebar';
 import styles from './SidebarHeader.module.scss';
 import Link from 'next/link';
 import type { SidebarVariant } from '@shared/lib/sidebar/sidebarVariant';
+import { LINK_PATHS } from '@shared/constants/routes';
 
 type SidebarHeaderProps = {
   variant: SidebarVariant;
@@ -16,7 +17,7 @@ export const SidebarHeader = (props: SidebarHeaderProps) => {
   return (
     <div className={styles.header}>
       {isExpanded && (
-        <Link className={styles.logo} href="/">
+        <Link className={styles.logo} href={LINK_PATHS.HOME}>
           <Logo width={33} height={38} />
           <h1 className={styles.title}>AI Chat</h1>
         </Link>

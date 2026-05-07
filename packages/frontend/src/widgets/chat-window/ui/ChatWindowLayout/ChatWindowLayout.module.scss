@@ -1,0 +1,36 @@
+@use '@styles/helpers' as *;
+
+.window {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bottomBackdrop {
+  position: absolute;
+  right: rem(8);
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-chat-backdrop);
+  height: var(--chat-bottom-backdrop-height);
+  background: var(--color-black-300) url('/background.svg') center / cover no-repeat fixed;
+  pointer-events: none;
+}
+
+.disclaimer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-chat-floating);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--chat-window-offset);
+  font-size: rem(14);
+  color: var(--color-white-300);
+}

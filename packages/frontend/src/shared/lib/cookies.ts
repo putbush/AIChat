@@ -1,6 +1,6 @@
 'use server';
 
-import { TOKEN_KEYS } from '@shared/constants/auth';
+import { TOKEN_KEYS, TOKENS_TTL } from '@shared/constants/auth';
 import { cookies } from 'next/headers';
 import { ResponseCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import type { AuthTokens } from '@aichat/shared';
@@ -35,8 +35,8 @@ export const setAuthCookies = async (
   tokens: AuthTokens,
 ) => {
   await setTokens(cookies, {
-    [TOKEN_KEYS.ACCESS_TOKEN]: { value: tokens.accessToken, maxAge: 60 * 60 * 2 },
-    [TOKEN_KEYS.REFRESH_TOKEN]: { value: tokens.refreshToken, maxAge: 60 * 60 * 24 * 30 },
+    [TOKEN_KEYS.ACCESS_TOKEN]: { value: tokens.accessToken, maxAge: TOKENS_TTL.ACCESS_TOKEN },
+    [TOKEN_KEYS.REFRESH_TOKEN]: { value: tokens.refreshToken, maxAge: TOKENS_TTL.REFRESH_TOKEN },
   });
 };
 
@@ -45,11 +45,6 @@ export const getAuthTokensFromCookies = async (): Promise<Partial<AuthTokens>> =
   const accessToken = cookieStore.get(TOKEN_KEYS.ACCESS_TOKEN)?.value;
   const refreshToken = cookieStore.get(TOKEN_KEYS.REFRESH_TOKEN)?.value;
   return { accessToken, refreshToken };
-};
-
-export const getAccessTokenFromCookies = async (): Promise<string | null> => {
-  const cookieStore = await cookies();
-  return cookieStore.get(TOKEN_KEYS.ACCESS_TOKEN)?.value ?? null;
 };
 
 export const clearAuthCookies = async (cookies: ResponseCookies) => {

@@ -17,4 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./chat"), exports);
 __exportStar(require("./user"), exports);
 __exportStar(require("./auth"), exports);
+__exportStar(require("./message"), exports);
 __exportStar(require("./common"), exports);

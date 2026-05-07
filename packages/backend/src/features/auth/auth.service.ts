@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { hash, verify } from 'argon2';
 import type { Request, Response } from 'express';
-import { RESRESH_TOKEN_COOKIE_NAME } from '@common/constants';
+import { ERROR_MESSAGES, RESRESH_TOKEN_COOKIE_NAME } from '@common/constants';
 import { JwtPayload } from './interfaces/jwt.payload';
 import { User } from '@prisma/client';
 import { AuthTokens } from '@aichat/shared';
@@ -17,7 +17,6 @@ import { AuthTokens } from '@aichat/shared';
 export class AuthService {
   private readonly JWT_ACCESS_TOKEN_TTL: number;
   private readonly JWT_REFRESH_TOKEN_TTL: number;
-  private readonly COOKIE_DOMAIN: string;
 
   constructor(
     private readonly prisma: PrismaService,
@@ -29,7 +28,6 @@ export class AuthService {
     this.JWT_REFRESH_TOKEN_TTL = this.configService.getOrThrow<number>(
       'jwt.refreshTokenTtl',
     );
-    this.COOKIE_DOMAIN = this.configService.getOrThrow<string>('cookie.domain');
   }
 
   async register(
@@ -43,7 +41,7 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new ConflictException('User with this email already exists');
+      throw new ConflictException(ERROR_MESSAGES.AUTH_USER_EXISTS);
     }
 
     const user = await this.prisma.user.create({
@@ -67,13 +65,13 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('User not found or invalid credentials');
+      throw new UnauthorizedException(ERROR_MESSAGES.AUTH_INVALID_CREDENTIALS);
     }
 
     const isPasswordValid = await verify(user.password, password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('User not found or invalid credentials');
+      throw new UnauthorizedException(ERROR_MESSAGES.AUTH_INVALID_CREDENTIALS);
     }
 
     return this.auth(res, user.id);
@@ -83,31 +81,27 @@ export class AuthService {
     const refreshToken = req.cookies[RESRESH_TOKEN_COOKIE_NAME] as string;
 
     if (!refreshToken) {
-      throw new UnauthorizedException('Refresh token is missing');
+      throw new UnauthorizedException(
+        ERROR_MESSAGES.AUTH_REFRESH_TOKEN_MISSING,
+      );
     }
 
     const payload: JwtPayload = await this.jwt.verifyAsync(refreshToken);
+    console.log('payload', payload.id);
 
     const user = await this.prisma.user.findUnique({
       where: { id: payload.id },
     });
 
     if (!user) {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException(ERROR_MESSAGES.AUTH_USER_NOT_FOUND);
     }
 
     return this.auth(res, user.id);
   }
 
-  // logout(res: Response): void {
-  //   this.setCookie(res, RESRESH_TOKEN_COOKIE_NAME, new Date(0));
-  // }
-
   private auth(res: Response, id: string): AuthTokens {
     const { accessToken, refreshToken } = this.generateTokens(id);
-
-    // this.setCookie(res, refreshToken, expiresDate(this.JWT_REFRESH_TOKEN_TTL));
-
     return { accessToken, refreshToken };
   }
 
@@ -117,7 +111,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException(ERROR_MESSAGES.AUTH_USER_NOT_FOUND);
     }
 
     return user;
@@ -134,14 +128,4 @@ export class AuthService {
     });
     return { accessToken, refreshToken };
   }
-
-  // private setCookie(res: Response, value: string, expires: Date) {
-  //   res.cookie(RESRESH_TOKEN_COOKIE_NAME, value, {
-  //     httpOnly: true,
-  //     ...(isDev(this.configService) ? {} : { domain: this.COOKIE_DOMAIN }),
-  //     secure: !isDev(this.configService),
-  //     sameSite: 'lax',
-  //     expires,
-  //   });
-  // }
 }

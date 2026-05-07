@@ -1,0 +1,17 @@
+@use '@styles/helpers' as *;
+
+.header {
+  @include frosted-glass($bgColor: var(--color-frosted-glass-200), $borderColor: var(--color-frosted-glass-200));
+
+  position: absolute;
+  top: rem(12);
+  left: 50%;
+  width: max-content;
+  font-size: fluid(20, 16);
+  font-weight: 500;
+  color: var(--color-white-100);
+  border-radius: rem(32);
+  padding: rem(8) rem(16);
+  transform: translateX(-50%);
+  z-index: var(--z-chat-floating);
+}

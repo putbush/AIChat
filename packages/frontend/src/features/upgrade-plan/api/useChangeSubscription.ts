@@ -1,20 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiClient } from '@shared/api/axios';
 import { FRONTEND_API_PATHS } from '@shared/constants/routes';
 import type { SubscriptionResponse, SubscriptionType } from '@aichat/shared';
+import { apiMutation } from '@shared/api/client';
 
 export const useChangeSubscription = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (credentials: {
-      subscription: SubscriptionType;
-    }): Promise<SubscriptionResponse> => {
-      const { data } = await apiClient.post<SubscriptionResponse>(
-        FRONTEND_API_PATHS.USER.SUBSCRIPTION,
-        credentials,
-      );
-      return data;
-    },
+    mutationFn: (payload: { subscription: SubscriptionType }) => apiMutation<SubscriptionResponse>(FRONTEND_API_PATHS.USER.SUBSCRIPTION, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },

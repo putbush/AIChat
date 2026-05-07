@@ -10,10 +10,10 @@
   min-height: 100dvh;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  z-index: 1111;
+  z-index: var(--z-modal);
   padding: rem(30) rem(20);
   background-color: var(--color-modal-bg);
-  backdrop-filter: blur(rem(40));
+  backdrop-filter: blur(40px);
 }
 
 .content {

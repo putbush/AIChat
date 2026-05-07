@@ -1,0 +1,22 @@
+.layout {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--color-black-300);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 var(--chat-bottom-backdrop-height);
+    z-index: var(--z-page-background);
+    background: var(--color-black-300) url('/background.svg') center / cover no-repeat fixed;
+    pointer-events: none;
+  }
+
+  > * {
+    position: relative;
+    z-index: var(--z-chat-content);
+  }
+}

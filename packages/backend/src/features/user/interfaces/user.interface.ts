@@ -1,4 +1,5 @@
 import { SubscriptionType } from '@aichat/shared';
+import type { Express } from 'express';
 
 export interface IUserService {
   setSubscription(

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { apiClient } from '@shared/api/axios';
+import { apiClient } from '@shared/api/client/axios';
 import { FRONTEND_API_PATHS } from '@shared/constants/routes';
 import type { User } from '@aichat/shared';
 

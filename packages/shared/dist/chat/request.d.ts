@@ -2,41 +2,26 @@ import { z } from 'zod';
 export declare const ChatCreateRequestSchema: z.ZodObject<{
     userId: z.ZodString;
     message: z.ZodObject<{
-        id: z.ZodString;
-        chatId: z.ZodString;
-        sender: z.ZodEnum<["user", "ai"]>;
+        chatId: z.ZodOptional<z.ZodString>;
         content: z.ZodString;
-        timestamp: z.ZodDate;
     }, "strip", z.ZodTypeAny, {
-        id: string;
-        chatId: string;
-        sender: "user" | "ai";
         content: string;
-        timestamp: Date;
+        chatId?: string | undefined;
     }, {
-        id: string;
-        chatId: string;
-        sender: "user" | "ai";
         content: string;
-        timestamp: Date;
+        chatId?: string | undefined;
     }>;
 }, "strip", z.ZodTypeAny, {
     userId: string;
     message: {
-        id: string;
-        chatId: string;
-        sender: "user" | "ai";
         content: string;
-        timestamp: Date;
+        chatId?: string | undefined;
     };
 }, {
     userId: string;
     message: {
-        id: string;
-        chatId: string;
-        sender: "user" | "ai";
         content: string;
-        timestamp: Date;
+        chatId?: string | undefined;
     };
 }>;
 export type ChatCreateRequest = z.infer<typeof ChatCreateRequestSchema>;

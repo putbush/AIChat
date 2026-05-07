@@ -2,7 +2,18 @@
 @use '@styles/helpers/functions' as *;
 
 @mixin fluid-text($max: 100, $min: 10) {
-    font-size: fluid($max, $min);
+  font-size: fluid($max, $min);
+}
+
+@mixin frosted-glass(
+  $blur: 15,
+  $saturate: 160,
+  $bgColor: var(--color-frosted-glass-100),
+  $borderColor: var(--color-frosted-glass-100)
+) {
+  background: $bgColor;
+  backdrop-filter: blur($blur * 1px) saturate($saturate * 1%);
+  border: 1px solid $borderColor;
 }
 
 @mixin gradient {
@@ -33,21 +44,20 @@
   }
 }
 
-
 @mixin hide {
-    opacity: 0;
-    visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
 }
 
 @mixin show {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 @mixin flex-center($isInline: false) {
   @if $isInline {
     display: inline-flex;
-  } @else  {
+  } @else {
     display: flex;
   }
 

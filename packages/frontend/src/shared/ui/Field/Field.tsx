@@ -8,7 +8,7 @@ import classNames from 'classnames';
 interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   ariaDescribedby?: string;
-  error: FieldError | undefined;
+  error?: FieldError;
   register: UseFormRegisterReturn;
 }
 

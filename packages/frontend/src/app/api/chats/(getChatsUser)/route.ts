@@ -1,21 +1,21 @@
-import { Chat, ChatsSchema } from '@aichat/shared';
-import { requestWithRefresh } from '@shared/api';
-import { buildApiResponse } from '@shared/api/buildApiResponse';
+import { ChatsSchema } from '@aichat/shared';
+import { requestWithRefresh } from '@shared/api/server';
+import { buildApiResponse } from '@shared/api/server/buildApiResponse';
 import { BACKEND_API_PATHS } from '@shared/constants/routes';
 import { handleApiRoute } from '@shared/lib/handleApiRoute';
 
 export const GET = async () => {
-  return handleApiRoute<Chat[]>(
+  return handleApiRoute(
     async () => {
       const response = await requestWithRefresh(
         {
           method: 'GET',
-          url: BACKEND_API_PATHS.CHATS.LIST,
+          url: BACKEND_API_PATHS.CHAT.LIST,
         },
         ChatsSchema,
       );
       return response;
     },
-    async (response) => await buildApiResponse<Chat[]>(response),
+    async (response) => await buildApiResponse(response),
   );
 };

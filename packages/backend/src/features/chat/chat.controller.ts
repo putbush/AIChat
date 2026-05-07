@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, Param } from '@nestjs/common';
 import type { IChatService } from './interfaces/chat.interface';
 import { Authorizated, Authorization } from '@common/decorators';
 import { ChatMapper } from '@common/mappers';
@@ -16,9 +16,13 @@ export class ChatController {
     return ChatMapper.toDtoList(await this.chatService.getAllChats(id));
   }
 
-  // @Authorization()
-  // @Post()
-  // async createChat(@Authorizated('id') id: string): Promise<ChatDto> {
-  //   return ChatMapper.toDto(await this.chatService.createChat(id, 'sdfhjsdfj'));
-  // }
+  @Authorization()
+  @Get(':chatId')
+  async getChatById(
+    @Authorizated('id') userId: string,
+    @Param('chatId') chatId: string,
+  ): Promise<ChatDto> {
+    const chat = await this.chatService.getUserChatOrThrow(userId, chatId);
+    return ChatMapper.toDto(chat);
+  }
 }

@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RegistrationSchema, type RegistrationDTO } from '@features/auth/model';
 import Link from 'next/link';
 import classNames from 'classnames';
+import { LINK_PATHS } from '@shared/constants/routes';
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -32,7 +33,7 @@ export const RegisterForm = () => {
     setError(null);
     mutate(dto, {
       onSuccess: () => {
-        router.push('/');
+        router.push(LINK_PATHS.HOME);
       },
       onError: (error) => {
         setError(error.message);
@@ -94,7 +95,7 @@ export const RegisterForm = () => {
         {isPending ? 'Registering...' : 'Register'}
       </Button>
       <span className={styles.line}></span>
-      <Link href="/login" className={styles.link}>
+      <Link href={LINK_PATHS.LOGIN} className={styles.link}>
         Already have an account? Log in
       </Link>
     </form>

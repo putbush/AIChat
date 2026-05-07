@@ -1,1 +1,1 @@
-export { CardPlan } from './ui';
+export { CardPlan } from './ui/CardPlan';

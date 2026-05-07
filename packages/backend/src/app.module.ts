@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import config from '@common/config';
 import { UserModule } from '@features/user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { MessageModule } from '@features/message/message.module';
 import path from 'path';
 
 @Module({
@@ -22,6 +23,7 @@ import path from 'path';
     ChatModule,
     UserModule,
     PrismaModule,
+    MessageModule,
   ],
 })
 export class AppModule {}

@@ -1,11 +1,18 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 import { Providers } from './providers';
 import './styles';
 
-const inter = Inter({
+const inter = localFont({
+  src: [
+    {
+      path: './fonts/Inter-V.woff2',
+      weight: '100 900',
+      style: 'normal',
+    },
+  ],
   variable: '--font-inter',
-  subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -13,13 +20,14 @@ export const metadata: Metadata = {
   description: 'AIChat - Чат для общения с ИИ',
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" data-scroll-behavior="smooth">
       <body className={`${inter.variable}`}>
         <Providers>{children}</Providers>
       </body>

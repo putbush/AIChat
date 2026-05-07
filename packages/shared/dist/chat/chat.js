@@ -5,7 +5,7 @@ const zod_1 = require("zod");
 exports.ChatSchema = zod_1.z.object({
     id: zod_1.z.string().uuid(),
     userId: zod_1.z.string().uuid(),
-    title: zod_1.z.string().max(30).nullable(),
+    title: zod_1.z.string().max(30),
     createdAt: zod_1.z.coerce.date(),
     updatedAt: zod_1.z.coerce.date(),
 });

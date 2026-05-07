@@ -1,0 +1,31 @@
+@use '@styles/helpers' as *;
+
+.message {
+  position: relative;
+  font-size: fluid(18, 16);
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+.user {
+  @include frosted-glass();
+
+  max-width: 70%;
+  align-self: flex-end;
+  padding: rem(8) rem(16);
+  border-radius: rem(24);
+}
+
+.ai {
+  width: 100%;
+  padding-left: rem(48);
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: fluid(34, 28);
+    height: fluid(34, 28);
+    left: 0;
+    background: url('/icons/logo.svg') center / contain no-repeat;
+  }
+}

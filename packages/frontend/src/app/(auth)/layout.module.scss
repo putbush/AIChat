@@ -6,11 +6,12 @@
   gap: rem(24);
   min-height: 100dvh;
   padding: rem(20);
+  background: url('/login-background.svg') center / cover no-repeat;
 }
 
 .image {
   width: min(42vw, rem(640));
-  height: auto;
+  height: min(95vh, rem(860));
   object-fit: contain;
 }
 
@@ -24,7 +25,6 @@
   min-height: calc(100dvh - rem(40));
   border-radius: rem(24);
   padding: fluid(36, 20) rem(20);
-  background: url('/login-background.svg') center / cover no-repeat;
 }
 
 .loginHeader {

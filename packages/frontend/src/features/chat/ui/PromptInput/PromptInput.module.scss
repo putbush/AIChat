@@ -1,21 +1,48 @@
 @use '@styles/helpers' as *;
 
-.promptInput {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  width: 85%;
-  align-self: center;
-}
 
-.field {
-  width: 100%;
+.promptInput {
+  --send-btn-size: #{rem(34)};
+  --send-btn-right: #{rem(8)};
+  --send-btn-gap: #{rem(10)};
+  --prompt-input-padding-y: #{rem(8)};
+
+  position: absolute;
+  left: 50%;
+  bottom: var(--chat-window-offset);
+  z-index: var(--z-chat-floating);
+  width: min(calc(100% - (var(--chat-shell-padding) * 2)), calc(var(--chat-content-width) + rem(40)));
+  transform: translateX(-50%);
 }
 
 .field input {
-  color: var(--color-gray);
-  padding: rem(8) rem(12);
+  height: rem(46);
+  padding: var(--prompt-input-padding-y) calc(var(--send-btn-size) + var(--send-btn-gap))
+    var(--prompt-input-padding-y) rem(16);
   border: var(--border-gray);
   border-radius: rem(100);
   background-color: var(--color-black-200);
+}
+
+.button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: var(--send-btn-right);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--send-btn-size);
+  height: var(--send-btn-size);
+  padding: 0;
+  background-color: var(--color-purple-secondary);
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.promptInput .button {
+  border-radius: 50%;
 }

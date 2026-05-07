@@ -16,6 +16,10 @@
   background-color: var(--color-black-100);
   border: var(--border-gray);
   border-radius: rem(12);
+
+  &:focus-visible {
+    border-color: var(--color-purple-secondary);
+  }
 }
 
 .eyeButton {
