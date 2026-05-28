@@ -1,8 +1,8 @@
 import { isAxiosError } from "axios";
-import { apiClient } from "./axios";
+import { apiClient } from "../core/axios";
 import { ERROR_MESSAGES } from "@shared/constants/errors";
 
-type QueryParams = Record<string, string | number | boolean>;
+type QueryParams = Record<string, string | number | boolean | undefined>;
 
 export const apiQuery = async <T>(url: string, params?: QueryParams): Promise<T> => {
   try {

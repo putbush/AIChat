@@ -2,8 +2,8 @@ import { Chat, GoogleGenAI } from '@google/genai';
 import { Injectable } from '@nestjs/common';
 import { Message } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
-import { GEMINI } from '../ai.constants';
 import { CONFIG_KEYS } from '@common/constants';
+import { GEMINI } from './gemini.constants';
 
 type GeminiMessage = {
   role: 'user' | 'model';
@@ -28,14 +28,19 @@ export class GeminiClient {
 
     const chat = this.createChat(geminiHistory);
 
-    const stream = await chat.sendMessageStream({ message });
+    try {
+      const stream = await chat.sendMessageStream({ message });
 
-    for await (const chunk of stream) {
-      const text = chunk.text ?? '';
+      for await (const chunk of stream) {
+        const text = chunk.text ?? '';
 
-      if (text) {
-        yield text;
+        if (text) {
+          yield text;
+        }
       }
+    } catch (error) {
+      console.error('Error sending message stream:', error);
+      throw error;
     }
   }
 

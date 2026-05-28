@@ -24,5 +24,8 @@
       "prettier --write",
       "eslint --fix"
     ]
+  },
+  "dependencies": {
+    "@ant-design/icons": "^6.2.2"
   }
 }

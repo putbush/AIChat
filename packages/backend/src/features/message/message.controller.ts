@@ -14,14 +14,14 @@ import {
 import { Authorizated, Authorization } from '@common/decorators';
 import {
   CreateMessageSchema,
+  MessagesPage,
   type CreateMessage,
-  type Message,
 } from '@aichat/shared';
 import { ZodExceptionPipe } from '@common/pipes';
 import type { IMessageService } from './interfaces/message.interface';
 import { MessageMapper } from '@common/mappers';
 import { type Response } from 'express';
-import { setStreamHeaders } from '@common/utils';
+import { setStreamHeaders, writeNdjson } from '@common/utils';
 import { MESSAGE_HISTORY_LIMIT } from './message.constants';
 
 @Controller('message')
@@ -42,17 +42,19 @@ export class MessageController {
 
     const { content, chatId } = createMessageDto;
 
-    const stream = this.messageService.sendMessageStream(
-      userId,
-      content,
-      chatId,
-    );
+    try {
+      const stream = this.messageService.sendMessageStream(
+        userId,
+        content,
+        chatId,
+      );
 
-    for await (const chunk of stream) {
-      res.write(chunk);
+      for await (const event of stream) {
+        writeNdjson(res, event);
+      }
+    } finally {
+      res.end();
     }
-
-    res.end();
   }
 
   @Authorization()
@@ -63,16 +65,22 @@ export class MessageController {
     @Query(
       'limit',
       new DefaultValuePipe(MESSAGE_HISTORY_LIMIT.DEFAULT),
-      ParseIntPipe,
+      new ParseIntPipe({ optional: true }),
     )
     limit: number,
-  ): Promise<Message[]> {
-    const messages = await this.messageService.getMessages(
+    @Query('cursor', new ParseUUIDPipe({ optional: true }))
+    cursor: string | undefined,
+  ): Promise<MessagesPage> {
+    const { items, nextCursor } = await this.messageService.getMessages(
       userId,
       chatId,
       limit,
+      cursor,
     );
 
-    return MessageMapper.toDtoList(messages);
+    return {
+      items: MessageMapper.toDtoList(items),
+      nextCursor: nextCursor,
+    };
   }
 }

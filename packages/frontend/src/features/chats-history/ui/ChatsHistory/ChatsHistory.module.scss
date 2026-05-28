@@ -1,6 +1,8 @@
 @use '@styles/helpers' as *;
 
 .history {
+  @include custom-scrollbar();
+
   display: flex;
   flex-direction: column;
   flex: auto;

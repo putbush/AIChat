@@ -1,3 +1,13 @@
 export const createTitle = (message: string): string => {
-  return message.length > 25 ? message.slice(0, 25) : message;
+  const words = message.split(' ');
+
+  let title = '';
+  for (const word of words) {
+    if (title.length + word.length + 1 > 45) {
+      title += '...';
+      break;
+    }
+    title += (title ? ' ' : '') + word;
+  }
+  return title;
 };

@@ -1,6 +1,6 @@
 import { UserSchema } from '@aichat/shared';
 import { requestWithRefresh } from '@shared/api/server';
-import { buildApiResponse } from '@shared/api/server/buildApiResponse';
+import { buildApiResponse } from '@shared/api/server/response/buildApiResponse';
 import { BACKEND_API_PATHS } from '@shared/constants/routes';
 import { handleApiRoute } from '@shared/lib/handleApiRoute';
 

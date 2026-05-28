@@ -43,3 +43,28 @@
   white-space: nowrap;
 }
 
+.dropdown {
+  background-color: var(--color-black-100) !important;
+  border: var(--border-gray);
+  border-radius: rem(12);
+  padding: rem(6);
+
+  :global(.ant-dropdown-menu-item) {
+    border-radius: rem(8);
+
+    &:not(:global(.ant-dropdown-menu-item-danger)) {
+      :global(.ant-dropdown-menu-title-content),
+      :global(.ant-dropdown-menu-item-icon) {
+        color: var(--color-white-100) !important;
+      }
+
+      &:hover {
+        background-color: var(--color-gray) !important;
+      }
+    }
+  }
+
+  :global(.ant-dropdown-menu-item-divider) {
+    background-color: var(--color-gray) !important;
+  }
+}

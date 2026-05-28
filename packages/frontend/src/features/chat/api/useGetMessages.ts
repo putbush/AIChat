@@ -1,15 +1,19 @@
-import type { Message } from '@aichat/shared';
+import type { MessagesPage } from '@aichat/shared';
 import { FRONTEND_API_PATHS } from '@shared/constants/routes';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { LIMIT_MESSAGES } from '@entities/chat/constants';
 import { apiQuery } from '@shared/api/client';
 
-export const useGetMessages = (chatId: string, limit?: number) => {
-  const effectiveLimit = limit ?? LIMIT_MESSAGES;
-
-  return useQuery({
+export const useGetMessages = (chatId: string, limit = LIMIT_MESSAGES) => {
+  return useInfiniteQuery({
     queryKey: [chatId],
-    queryFn: () => apiQuery<Message[]>(FRONTEND_API_PATHS.MESSAGE.LIST(chatId), { limit: effectiveLimit }),
+    initialPageParam: undefined as string | undefined,
+    queryFn: ({ pageParam }) =>
+      apiQuery<MessagesPage>(FRONTEND_API_PATHS.MESSAGE.LIST(chatId), {
+        limit,
+        cursor: pageParam,
+      }),
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     enabled: Boolean(chatId),
   });
 };

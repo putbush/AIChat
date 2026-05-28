@@ -1,6 +1,5 @@
 'use client';
 
-import { Field } from '@shared/ui/Field';
 import styles from './PromptInput.module.scss';
 import { Button } from '@shared/ui';
 import Image from 'next/image';
@@ -10,8 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useSendMessage } from '@features/chat/api';
 import { Tooltip } from 'antd';
-import { useRouter } from 'next/navigation';
-import { LINK_PATHS } from '@shared/constants/routes';
+import { useStreamingMessage } from '@features/chat/model';
+import { FieldTextarea } from '@shared/ui/FieldTextarea';
 
 type PromptInputProps = {
   chatId?: string;
@@ -19,11 +18,12 @@ type PromptInputProps = {
 
 export const PromptInput = (props: PromptInputProps) => {
   const { chatId } = props;
-  const router = useRouter();
 
   const [error, setError] = useState<string | null>(null);
+  const [key, setKey] = useState<number>(0); // Used to reset the form
 
   const { mutate, isPending } = useSendMessage();
+  const streamingMessage = useStreamingMessage(chatId);
 
   const {
     register,
@@ -46,33 +46,54 @@ export const PromptInput = (props: PromptInputProps) => {
 
   const onSubmit = (data: { content: string }) => {
     setError(null);
-    mutate(
-      { content: data.content, chatId },
-      {
-        onSuccess: (message) => {
-          resetField('content', { defaultValue: '' });
 
-          if (!chatId) {
-            router.push(LINK_PATHS.CHAT(message.chatId));
-          }
+    streamingMessage.start(data.content);
+
+    resetField('content', { defaultValue: '' });
+    setKey((prev) => prev + 1); // Reset the form by changing its key
+
+    mutate(
+      {
+        payload: { content: data.content, chatId },
+        onEvent: streamingMessage.handleEvent,
+      },
+      {
+        onSuccess: () => {
+          void streamingMessage.finish();
         },
         onError: (error) => {
+          streamingMessage.error();
           setError(error.message);
         },
       },
     );
+  };
 
+  const handleTextareaKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key !== 'Enter' || event.shiftKey) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (isSubmitDisabled) {
+      return;
+    }
+
+    event.currentTarget.form?.requestSubmit();
   };
 
   return (
     <form className={styles.promptInput} onSubmit={handleSubmit(onSubmit)} noValidate>
-      <Field
+      <FieldTextarea
+        key={key}
+        id="prompt-input"
         label="Your prompt"
         placeholder="Type your message here..."
         className={styles.field}
-        ariaDescribedby={error ? 'prompt-input-error' : undefined}
+        aria-describedby={error ? 'prompt-input-error' : undefined}
         register={register('content')}
-        type="text"
+        onKeyDown={handleTextareaKeyDown}
       />
       <Tooltip title={tooltipTitle} placement="top" mouseEnterDelay={0.15}>
         <Button className={styles.button} type="submit" disabled={isSubmitDisabled}>

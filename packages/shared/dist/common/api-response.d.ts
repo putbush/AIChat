@@ -28,17 +28,17 @@ export declare const ApiErrorResponseSchema: z.ZodObject<{
         details?: unknown;
     }>;
 }, "strip", z.ZodTypeAny, {
-    success: false;
     error: {
         code: string;
         message: string;
         details?: unknown;
     };
+    success: false;
 }, {
-    success: false;
     error: {
         code: string;
         message: string;
         details?: unknown;
     };
+    success: false;
 }>;

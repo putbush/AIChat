@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MessagesSchema = exports.MessageSchema = exports.MessageSenderSchema = void 0;
+exports.MessagesPageSchema = exports.MessagesSchema = exports.MessageSchema = exports.MessageSenderSchema = void 0;
 const zod_1 = require("zod");
 const errors_1 = require("../common/errors");
 exports.MessageSenderSchema = zod_1.z.enum(['user', 'ai']);
@@ -11,7 +11,11 @@ exports.MessageSchema = zod_1.z.object({
     content: zod_1.z
         .string()
         .nonempty(errors_1.SHARED_VALIDATION_ERRORS.MESSAGE_CONTENT_EMPTY)
-        .max(2000, errors_1.SHARED_VALIDATION_ERRORS.MESSAGE_CONTENT_TOO_LONG),
+        .max(10000, errors_1.SHARED_VALIDATION_ERRORS.MESSAGE_CONTENT_TOO_LONG),
     createdAt: zod_1.z.coerce.date(),
 });
 exports.MessagesSchema = zod_1.z.array(exports.MessageSchema);
+exports.MessagesPageSchema = zod_1.z.object({
+    items: exports.MessagesSchema,
+    nextCursor: zod_1.z.string().uuid().nullable(),
+});

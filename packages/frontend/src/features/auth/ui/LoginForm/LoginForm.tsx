@@ -46,7 +46,7 @@ export const LoginForm = () => {
         placeholder="Enter your email address"
         type="email"
         id="email"
-        ariaDescribedby={error ? 'login-error' : undefined}
+        aria-describedby={error ? 'login-error' : undefined}
         error={errors.email}
         register={register('email')}
       />
@@ -55,7 +55,7 @@ export const LoginForm = () => {
         placeholder="Password"
         type="password"
         id="password"
-        ariaDescribedby={error ? 'login-error' : undefined}
+        aria-describedby={error ? 'login-error' : undefined}
         error={errors.password}
         register={register('password')}
       />

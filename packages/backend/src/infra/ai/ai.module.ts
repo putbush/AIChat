@@ -10,6 +10,6 @@ import { GeminiClient } from './gemini/gemini.client';
     },
     GeminiClient,
   ],
-  exports: [AiService],
+  exports: ['IAiService'],
 })
 export class AiModule {}

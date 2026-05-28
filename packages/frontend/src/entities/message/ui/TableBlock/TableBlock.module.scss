@@ -1,0 +1,37 @@
+@use '@styles/helpers' as *;
+
+.tableWrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-block: rem(12);
+}
+
+.table {
+  width: 100%;
+  min-width: rem(520);
+  border-collapse: collapse;
+  font-size: rem(15);
+
+  th,
+  td {
+    padding: rem(10) rem(12);
+    border: 1px solid var(--color-gray);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background-color: var(--color-black-100);
+    color: var(--color-white);
+    font-weight: 600;
+  }
+
+  td {
+    background-color: var(--color-black-200);
+    color: var(--color-white-100);
+  }
+
+  tr:not(:last-child) {
+    border-bottom: 1px solid var(--color-gray);
+  }
+}

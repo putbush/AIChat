@@ -1,13 +1,15 @@
 @use '@styles/helpers' as *;
 
 .scrollArea {
+  @include custom-scrollbar();
+
   position: relative;
   z-index: var(--z-chat-content);
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   padding: fluid(96, 72) var(--chat-shell-padding)
-    calc(var(--chat-bottom-backdrop-height) + rem(32));
+    calc(var(--chat-bottom-backdrop-height) + rem(96));
 }
 
 .list {

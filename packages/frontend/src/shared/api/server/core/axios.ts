@@ -2,15 +2,11 @@ import 'server-only';
 
 import { API } from '@shared/constants/api';
 import axios from 'axios';
+import { getBackendBaseUrl } from './getBackendUrl';
 
-const baseURL = process.env.BACKEND_API_URL;
-
-if (!baseURL) {
-  throw new Error('BACKEND_API_URL is not defined');
-}
 
 export const apiServer = axios.create({
-  baseURL: baseURL,
+  baseURL: getBackendBaseUrl(),
   timeout: API.TIMEOUT,
   proxy: false,
 });

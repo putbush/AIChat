@@ -1,15 +1,11 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { GeminiClient } from './gemini/gemini.client';
 import { Message } from '@prisma/client';
-import {
-  AI_PROVIDERS,
-  type AiProvider,
-  CONFIG_KEYS,
-  ERROR_MESSAGES,
-} from '@common/constants';
+import { CONFIG_KEYS, ERROR_MESSAGES } from '@common/constants';
 import { ConfigService } from '@nestjs/config';
-import { isAiProvider } from '@common/utils';
 import { IAiService } from './interfaces/ai.interface';
+import { isAiProvider } from './utils/is-provider.utils';
+import { AI_PROVIDERS, AiProvider } from './ai.constants';
 
 @Injectable()
 export class AiService implements IAiService {

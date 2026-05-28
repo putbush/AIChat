@@ -7,6 +7,10 @@
   top: rem(12);
   left: 50%;
   width: max-content;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: fluid(20, 16);
   font-weight: 500;
   color: var(--color-white-100);

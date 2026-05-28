@@ -9,12 +9,14 @@ import Image from 'next/image';
 import type { SidebarVariant } from '@shared/lib/sidebar/sidebarVariant';
 import classNames from 'classnames';
 import { LINK_PATHS } from '@shared/constants/routes';
+import { useLogout } from '@features/auth/api';
 
 type UserProfileProps = { variant: SidebarVariant; toggleUpgradeModal: () => void };
 
 export const UserProfile = (props: UserProfileProps) => {
   const { variant, toggleUpgradeModal } = props;
   const { data, error } = useUser();
+  const logout = useLogout();
   const isExpanded = variant === 'expanded';
 
   if (error || !data) {
@@ -57,6 +59,7 @@ export const UserProfile = (props: UserProfileProps) => {
           name={name}
           email={email}
           isOpen={isExpanded}
+          onLogout={logout}
           className={styles.userIdentity}
         />
         {isExpanded && (

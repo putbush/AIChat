@@ -48,7 +48,7 @@ export const RegisterForm = () => {
         placeholder="Enter your name"
         type="text"
         id="name"
-        ariaDescribedby={error ? 'login-error' : undefined}
+        aria-describedby={error ? 'login-error' : undefined}
         error={errors.name}
         register={register('name')}
       />
@@ -57,7 +57,7 @@ export const RegisterForm = () => {
         placeholder="Enter your email address"
         type="email"
         id="email"
-        ariaDescribedby={error ? 'login-error' : undefined}
+        aria-describedby={error ? 'login-error' : undefined}
         error={errors.email}
         register={register('email')}
       />
@@ -66,7 +66,7 @@ export const RegisterForm = () => {
         placeholder="Password"
         type="password"
         id="password"
-        ariaDescribedby={error ? 'login-error' : undefined}
+        aria-describedby={error ? 'login-error' : undefined}
         error={errors.password}
         register={register('password')}
       />
@@ -75,7 +75,7 @@ export const RegisterForm = () => {
         placeholder="Confirm Password"
         type="password"
         id="confirmPassword"
-        ariaDescribedby={error ? 'login-error' : undefined}
+        aria-describedby={error ? 'login-error' : undefined}
         error={errors.confirmPassword}
         register={register('confirmPassword')}
       />

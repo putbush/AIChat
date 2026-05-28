@@ -1,0 +1,1 @@
+export const STREAMING_AI_MESSAGE_ID = 'streaming-ai-message';

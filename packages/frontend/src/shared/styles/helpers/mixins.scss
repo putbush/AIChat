@@ -44,6 +44,26 @@
   }
 }
 
+@mixin custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s;
+  
+  &:hover::-webkit-scrollbar-thumb {
+    background: var(--color-gray);
+    transition-duration: var(--transition-duration);
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--color-white-300);
+    transition-duration: var(--transition-duration);
+  }
+
+  &:hover {
+    scrollbar-color: var(--color-gray) transparent;
+  }
+}
+
 @mixin hide {
   opacity: 0;
   visibility: hidden;

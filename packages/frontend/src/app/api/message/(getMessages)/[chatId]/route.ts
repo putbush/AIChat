@@ -1,6 +1,6 @@
-import { MessagesSchema } from '@aichat/shared';
+import { MessagesPageSchema } from '@aichat/shared';
 import { requestWithRefresh } from '@shared/api/server';
-import { buildApiResponse } from '@shared/api/server/buildApiResponse';
+import { buildApiResponse } from '@shared/api/server/response/buildApiResponse';
 import { API } from '@shared/constants/api';
 import { BACKEND_API_PATHS } from '@shared/constants/routes';
 import { handleApiRoute } from '@shared/lib/handleApiRoute';
@@ -15,6 +15,7 @@ export const GET = async (request: Request, context: GetMessagesRouteContext) =>
   const { chatId } = await context.params;
   const { searchParams } = new URL(request.url);
   const limit = searchParams.get(API.LIMIT);
+  const cursor = searchParams.get(API.CURSOR);
 
   return handleApiRoute(
     async () => {
@@ -22,9 +23,9 @@ export const GET = async (request: Request, context: GetMessagesRouteContext) =>
         {
           method: 'GET',
           url: BACKEND_API_PATHS.MESSAGE.LIST(chatId),
-          params: limit ? { limit } : undefined,
+          params: { limit, cursor},
         },
-        MessagesSchema,
+        MessagesPageSchema,
       );
       return response;
     },

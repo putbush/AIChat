@@ -2,11 +2,12 @@
 
 import { useGetMessages } from '@features/chat/api';
 import styles from './MessageList.module.scss';
-import { useEffect, useMemo, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef } from 'react';
 import { Message } from '@entities/message';
 import { Spin } from 'antd';
 import Link from 'next/link';
 import { Button } from '@shared/ui';
+import InfiniteScroll from 'react-infinite-scroller';
 
 type MessageListProps = {
   chatId: string;
@@ -14,17 +15,26 @@ type MessageListProps = {
 
 export const MessageList = (props: MessageListProps) => {
   const { chatId } = props;
-  const { data, isLoading, isError, error } = useGetMessages(chatId);
-  const messages = useMemo(() => (Array.isArray(data) ? data : []), [data]);
+  const { data, isLoading, isError, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useGetMessages(chatId);
+
+  const messages = useMemo(() => {
+    return data ? [...data.pages].reverse().flatMap((page) => page.items) : [];
+  }, [data]);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const didInitialScrollRef = useRef(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const container = containerRef.current;
-    if (container) {
-      container.scrollTop = container.scrollHeight;
+
+    if (!container || didInitialScrollRef.current || messages.length === 0) {
+      return;
     }
-  }, [messages]);
+
+    container.scrollTop = container.scrollHeight;
+    didInitialScrollRef.current = true;
+  }, [messages.length]);
 
   if (isLoading) {
     return (
@@ -47,13 +57,34 @@ export const MessageList = (props: MessageListProps) => {
 
   return (
     <div className={styles.scrollArea} ref={containerRef}>
-      <div className={styles.list}>
-        {messages.map((message) => (
-          <Message key={message.id} sender={message.sender}>
-            {message.content}
-          </Message>
-        ))}
-      </div>
+      <InfiniteScroll
+        pageStart={0}
+        loadMore={() => {
+          if (!isFetchingNextPage) {
+            void fetchNextPage();
+          }
+        }}
+        hasMore={hasNextPage && !isFetchingNextPage}
+        useWindow={false}
+        getScrollParent={() => containerRef.current}
+        isReverse
+        initialLoad={false}
+      >
+        <div className={styles.list}>
+          {messages.map((message) => (
+            <Message
+              key={message.id}
+              sender={message.sender}
+            >
+              {message.content ? (
+                message.content
+              ) : message.sender === 'ai' ? (
+                <Spin className={styles.loadingSpinner} size="small" />
+              ) : null}
+            </Message>
+          ))}
+        </div>
+      </InfiniteScroll>
     </div>
   );
 };

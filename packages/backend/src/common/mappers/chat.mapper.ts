@@ -6,7 +6,7 @@ export class ChatMapper {
     return {
       id: chat.id,
       userId: chat.userID,
-      title: chat.title ?? null,
+      title: chat.title,
       createdAt: chat.createdAt,
       updatedAt: chat.updatedAt,
     };

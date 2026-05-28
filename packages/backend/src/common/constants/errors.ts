@@ -1,4 +1,5 @@
 export const ERROR_MESSAGES = {
+  UNEXPECTED: 'An unexpected error occurred. Please try again later.',
   AUTH_USER_EXISTS: 'User with this email already exists',
   AUTH_INVALID_CREDENTIALS: 'User not found or invalid credentials',
   AUTH_REFRESH_TOKEN_MISSING: 'Refresh token is missing',
@@ -12,6 +13,7 @@ export const ERROR_MESSAGES = {
   AVATAR_INVALID_FILE_TYPE:
     'Only image files are allowed (jpg, jpeg, png, webp)',
   AVATAR_FILE_TOO_LARGE: 'File size should not exceed 5MB',
+  AI_RESPONSE_FAILED: 'Failed to generate AI response.',
   AI_PROVIDER_UNSUPPORTED: (provider: string = 'provider not specified') =>
     `Unsupported AI provider: ${provider}`,
 } as const;

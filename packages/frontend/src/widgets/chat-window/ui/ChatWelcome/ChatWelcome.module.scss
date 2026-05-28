@@ -1,6 +1,10 @@
 @use '@styles/helpers' as *;
 
 .info {
+  --chat-bottom-backdrop-height: #{rem(30)};
+
+  position: relative;
+  bottom: var(--chat-bottom-backdrop-height);
   display: flex;
   flex-direction: column;
   align-items: center;

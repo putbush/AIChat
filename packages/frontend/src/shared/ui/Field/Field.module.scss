@@ -6,33 +6,46 @@
 
 .inputWrap {
   position: relative;
+  width: 100%;
+  background-color: var(--color-black-100);
+  border: var(--border-gray);
+  border-radius: rem(12);
+
+  &:focus-within {
+    border-color: var(--color-purple-secondary);
+  }
+}
+
+.label {
+  @include visually-hidden;
 }
 
 .input {
   display: block;
   width: 100%;
-  color: var(--color-white);
   padding: rem(17);
-  background-color: var(--color-black-100);
-  border: var(--border-gray);
-  border-radius: rem(12);
-
-  &:focus-visible {
-    border-color: var(--color-purple-secondary);
-  }
+  padding-right: rem(32);
+  color: var(--color-white);
+  background-color: transparent;
+  border: none;
+  border-radius: inherit;
 }
 
 .eyeButton {
+  position: absolute;
+  top: 50%;
+  right: rem(10);
+  transform: translateY(-50%);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  aspect-ratio: 1 / 1;
-  top: 50%;
-  transform: translateY(-50%);
-  right: rem(10);
-  background-color: transparent;
-  padding: 0; 
+
+  width: rem(32);
+  height: rem(32);
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 
 .isInvalid {

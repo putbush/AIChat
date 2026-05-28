@@ -1,12 +1,13 @@
 @use '@styles/helpers' as *;
 
 .profile {
+  @include frosted-glass($bgColor: var(--color-frosted-glass-000), $borderColor: var(--color-frosted-glass-100));
+  
   display: flex;
   flex-direction: column;
   margin-top: auto;
   gap: fluid(18, 14);
   padding: fluid(14, 10);
-  background-color: var(--color-black-100);
   border-radius: rem(12);
 }
 

@@ -2,10 +2,14 @@ import { PrismaService } from '@infra/prisma/prisma.service';
 import { type IChatService } from '@features/chat/interfaces/chat.interface';
 import { type IAiService } from '@infra/ai/interfaces/ai.interface';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { IMessageService } from './interfaces/message.interface';
+import {
+  GetMessagesResult,
+  IMessageService,
+} from './interfaces/message.interface';
 import { Sender, type Message } from '@prisma/client';
 import { ERROR_MESSAGES } from '@common/constants';
 import { MESSAGE_HISTORY_LIMIT } from './message.constants';
+import { MessageStreamEvent } from '@aichat/shared';
 
 type CreateMessageResult = {
   message: Message;
@@ -24,45 +28,80 @@ export class MessageService implements IMessageService {
     userId: string,
     content: string,
     chatId?: string,
-  ): AsyncGenerator<string> {
+  ): AsyncGenerator<MessageStreamEvent> {
     const { message, isChatCreated } = await this.createMessage(
       userId,
       content,
       chatId,
     );
 
-    const history = isChatCreated
-      ? []
-      : await this.getMessageHistory(message.chatID, message.id);
+    yield {
+      type: 'chat',
+      chatId: message.chatID,
+      isCreated: isChatCreated,
+    };
 
-    const response = this.aiService.generateResponse(history, message.content);
+    yield {
+      type: 'userMessage',
+      messageId: message.id,
+    };
 
-    let answer = '';
+    try {
+      const history = isChatCreated
+        ? []
+        : await this.getMessageHistory(message.chatID, message.id);
 
-    for await (const chunk of response) {
-      answer += chunk;
-      yield chunk;
+      const response = this.aiService.generateResponse(
+        history,
+        message.content,
+      );
+
+      let answer = '';
+
+      for await (const chunk of response) {
+        answer += chunk;
+
+        yield {
+          type: 'chunk',
+          text: chunk,
+        };
+      }
+
+      yield* this.saveAndYieldAiMessage(message.chatID, answer);
+
+      yield {
+        type: 'done',
+      };
+    } catch {
+      yield {
+        type: 'error',
+        message: ERROR_MESSAGES.AI_RESPONSE_FAILED,
+      };
     }
-
-    await this.createAiMessage(message.chatID, answer);
   }
 
   async getMessages(
     userId: string,
     chatId: string,
     limit: number,
-  ): Promise<Message[]> {
+    cursor?: string,
+  ): Promise<GetMessagesResult> {
     this.validateMessagesLimit(limit);
 
     const chat = await this.chatService.getUserChatOrThrow(userId, chatId);
 
     const messages = await this.prisma.message.findMany({
       where: { chatID: chat.id },
-      take: limit,
+      take: -limit,
+      cursor: cursor ? { id: cursor } : undefined,
+      skip: cursor ? 1 : 0,
       orderBy: { createdAt: 'asc' },
     });
 
-    return messages;
+    return {
+      items: messages,
+      nextCursor: messages.length ? messages[0].id : null,
+    };
   }
 
   private async createMessage(
@@ -99,15 +138,30 @@ export class MessageService implements IMessageService {
     });
   }
 
+  private async *saveAndYieldAiMessage(
+    chatId: string,
+    content: string,
+  ): AsyncGenerator<MessageStreamEvent> {
+    const aiMessage = await this.createAiMessage(chatId, content);
+
+    if (aiMessage) {
+      yield {
+        type: 'aiMessage',
+        messageId: aiMessage.id,
+        content: aiMessage.content,
+      };
+    }
+  }
+
   private async createAiMessage(
     chatId: string,
     content: string,
-  ): Promise<void> {
+  ): Promise<Message | null> {
     if (!content.trim()) {
-      return;
+      return null;
     }
 
-    await this.prisma.message.create({
+    return await this.prisma.message.create({
       data: {
         chatID: chatId,
         sender: Sender.ai,

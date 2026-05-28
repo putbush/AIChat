@@ -1,0 +1,10 @@
+@use '@styles/helpers' as *;
+
+.inlineCode {
+  padding: rem(2) rem(6);
+  border-radius: rem(6);
+  background: var(--color-white-400);
+  color: var(--color-white-100);
+  font-family: monospace;
+  font-size: 0.9em;
+}

@@ -1,0 +1,42 @@
+@use '@styles/helpers' as *;
+
+.formGroup {
+  width: 100%;
+  position: relative;
+  border: var(--border-gray);
+  color: var(--color-white);
+  background-color: var(--color-black-200);
+
+  &:focus-within {
+    border-color: var(--color-purple-secondary);
+  }
+}
+
+.label {
+  @include visually-hidden;
+}
+
+.input {
+  @include custom-scrollbar();
+
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: rem(120);
+  line-height: normal;
+  overflow: hidden;
+  color: var(--color-white);
+  background-color: transparent;
+  border: none;
+  resize: none;
+}
+
+.isInvalid {
+  border-color: var(--color-red);
+}
+
+.error {
+  padding-top: rem(5);
+  font-size: fluid(12, 10);
+  color: var(--color-red);
+}

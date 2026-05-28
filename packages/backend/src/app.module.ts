@@ -3,12 +3,11 @@ import { ChatModule } from '@features/chat/chat.module';
 import { AuthModule } from '@features/auth/auth.module';
 import { PrismaModule } from '@infra/prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
-import config from '@common/config';
 import { UserModule } from '@features/user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MessageModule } from '@features/message/message.module';
+import config from '@common/config';
 import path from 'path';
-import { AiModule } from '@infra/ai/ai.module';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { AiModule } from '@infra/ai/ai.module';
     UserModule,
     PrismaModule,
     MessageModule,
-    AiModule,
   ],
 })
 export class AppModule {}

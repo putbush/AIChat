@@ -1,10 +1,10 @@
 import { ERROR_MESSAGES } from '@shared/constants/errors';
-import { apiClient } from './axios';
+import { apiClient } from '../core/axios';
 import { isAxiosError } from 'axios';
 
 type MutationParams = Record<string, string | number | boolean >;
 
-export const apiMutation = async <T>(url: string, params: MutationParams): Promise<T> => {
+export const apiMutation = async <T>(url: string, params?: MutationParams): Promise<T> => {
   try {
     const { data } = await apiClient.post<T>(url, params);
     return data;

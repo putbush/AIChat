@@ -7,23 +7,26 @@ import classNames from 'classnames';
 
 interface FieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  ariaDescribedby?: string;
   error?: FieldError;
   register: UseFormRegisterReturn;
 }
 
 export const Field = (props: FieldProps) => {
+  const { id, label, className, error, register, type, ...rest } = props;
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const typeIsPassword = props.type === 'password';
-  const inputType = typeIsPassword && showPassword ? 'text' : props.type;
+  const inputType = typeIsPassword && showPassword ? 'text' : type;
 
-  const togglePasswordVisibility = useCallback(() => setShowPassword(!showPassword), [showPassword]);
+  const togglePasswordVisibility = useCallback(
+    () => setShowPassword(!showPassword),
+    [showPassword],
+  );
 
-  const { label, placeholder, className, id, ariaDescribedby, error, register } = props;
   return (
     <div className={classNames(styles.formGroup, className)}>
       <div className={styles.inputWrap}>
-        <label htmlFor={id} className="visually-hidden">
+        <label htmlFor={id} className={styles.label}>
           {label}
         </label>
         <input
@@ -32,9 +35,8 @@ export const Field = (props: FieldProps) => {
           className={classNames(styles.input, {
             [styles.isInvalid]: error,
           })}
-          placeholder={placeholder}
-          aria-describedby={ariaDescribedby}
           {...register}
+          {...rest}
         />
         {typeIsPassword && (
           <Button

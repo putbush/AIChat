@@ -1,27 +1,34 @@
 @use '@styles/helpers' as *;
 
-
 .promptInput {
   --send-btn-size: #{rem(34)};
   --send-btn-right: #{rem(8)};
   --send-btn-gap: #{rem(10)};
-  --prompt-input-padding-y: #{rem(8)};
+  --prompt-input-padding-x: #{rem(16)};
+  --prompt-input-padding-y: #{rem(10)};
+  --prompt-input-action-space: calc(
+    var(--send-btn-size) + var(--send-btn-right) + var(--send-btn-gap)
+  );
 
   position: absolute;
   left: 50%;
   bottom: var(--chat-window-offset);
   z-index: var(--z-chat-floating);
-  width: min(calc(100% - (var(--chat-shell-padding) * 2)), calc(var(--chat-content-width) + rem(40)));
+  width: min(
+    calc(100% - (var(--chat-shell-padding) * 2)),
+    calc(var(--chat-content-width) + rem(40))
+  );
   transform: translateX(-50%);
 }
 
-.field input {
-  height: rem(46);
-  padding: var(--prompt-input-padding-y) calc(var(--send-btn-size) + var(--send-btn-gap))
-    var(--prompt-input-padding-y) rem(16);
-  border: var(--border-gray);
-  border-radius: rem(100);
-  background-color: var(--color-black-200);
+.field {
+  min-height: var(--chat-prompt-input-height);
+  padding:
+    var(--prompt-input-padding-y)
+    var(--prompt-input-action-space)
+    var(--prompt-input-padding-y)
+    var(--prompt-input-padding-x);
+  border-radius: rem(20);
 }
 
 .button {

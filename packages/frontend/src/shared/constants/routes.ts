@@ -22,6 +22,7 @@ export const FRONTEND_API_PATHS = {
   AUTH: {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
+    LOGOUT: '/auth/logout',
   },
   CHAT: {
     LIST: '/chats',
