@@ -16,13 +16,13 @@ RUN pnpm install --frozen-lockfile
 
 COPY packages/backend packages/backend
 COPY packages/shared packages/shared
-COPY public public
 
 ENV DATABASE_URL=postgresql://postgres:postgres@localhost:5432/aichat
 
 RUN pnpm --filter @aichat/shared build
 RUN pnpm --filter backend exec prisma generate
 RUN pnpm --filter backend build
+RUN mkdir -p public/avatars
 
 ENV NODE_ENV=production
 

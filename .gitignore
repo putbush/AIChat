@@ -1,6 +1,7 @@
 node_modules
 
-/public/avatars/
+/public/avatars/*
+!/public/avatars/.gitkeep
 
 .env
 .env.*
