@@ -22,10 +22,14 @@ export const MarkdownContent = ({ children }: { children: string }) => {
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}
       components={{
-        table({ node: _node, children, ...props }) {
+        table({ node, children, ...props }) {
+          void node;
+
           return <TableBlock {...props}>{children}</TableBlock>;
         },
-        code({ node: _node, className, children, ...props }) {
+        code({ node, className, children, ...props }) {
+          void node;
+
           const match = /language-(\w+)/.exec(className ?? '');
           const code = getNodeText(children).replace(/\n$/, '');
 

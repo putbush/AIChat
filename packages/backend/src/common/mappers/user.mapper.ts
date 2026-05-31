@@ -10,6 +10,7 @@ export class UserMapper {
       email: user.email,
       subscription: SubscriptionMapper.toDto(user.subscription),
       avatarUrl: user.avatarUrl ?? null,
+      updatedAt: user.updatedAt.toISOString(),
     };
   }
 }

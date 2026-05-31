@@ -27,6 +27,6 @@
     width: fluid(34, 28);
     height: fluid(34, 28);
     left: 0;
-    background: url('/icons/logo.svg') center / contain no-repeat;
+    background: var(--asset-icon-logo) center / contain no-repeat;
   }
 }

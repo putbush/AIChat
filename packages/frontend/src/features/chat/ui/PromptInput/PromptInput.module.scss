@@ -23,31 +23,18 @@
 
 .field {
   min-height: var(--chat-prompt-input-height);
-  padding:
-    var(--prompt-input-padding-y)
-    var(--prompt-input-action-space)
-    var(--prompt-input-padding-y)
-    var(--prompt-input-padding-x);
+  padding: var(--prompt-input-padding-y) var(--prompt-input-action-space)
+    var(--prompt-input-padding-y) var(--prompt-input-padding-x);
   border-radius: rem(20);
 }
 
 .button {
+  --button-icon-size: var(--send-btn-size);
+
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   right: var(--send-btn-right);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--send-btn-size);
-  height: var(--send-btn-size);
-  padding: 0;
-  background-color: var(--color-purple-secondary);
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
 }
 
 .promptInput .button {

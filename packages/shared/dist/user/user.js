@@ -7,8 +7,9 @@ exports.UserSchema = zod_1.z.object({
     id: zod_1.z.string().uuid(),
     email: zod_1.z.string().email(),
     name: zod_1.z.string().min(2).max(40),
-    avatarUrl: zod_1.z.string().url().optional().nullable(),
+    avatarUrl: zod_1.z.string().optional().nullable(),
     subscription: exports.SubscriptionLevel,
+    updatedAt: zod_1.z.string().datetime(),
 });
 exports.SubscriptionResponseSchema = zod_1.z.object({
     subscription: exports.SubscriptionLevel,

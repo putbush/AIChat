@@ -14,10 +14,13 @@
   width: fluid(290, 200);
   min-width: fluid(290, 200);
   background-color: var(--color-black-200);
-  border-right: var(--border);
+  border-right: var(--border-black-100);
   overflow: hidden;
   z-index: var(--z-sidebar);
-  transition: width 0.3s ease, min-width 0.3s ease, padding 0.3s ease;
+  transition:
+    width 0.3s ease,
+    min-width 0.3s ease,
+    padding 0.3s ease;
 
   @include mobile {
     position: fixed;

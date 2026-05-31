@@ -17,7 +17,7 @@
   left: 0;
   z-index: var(--z-chat-backdrop);
   height: var(--chat-bottom-backdrop-height);
-  background: var(--color-black-300) url('/background.svg') center / cover no-repeat fixed;
+  background: var(--color-black-300) var(--asset-background-image) center / cover no-repeat fixed;
   pointer-events: none;
 }
 

@@ -7,8 +7,9 @@ export const UserSchema = z.object({
   id: z.string().uuid(),
   email: z.string().email(),
   name: z.string().min(2).max(40),
-  avatarUrl: z.string().url().optional().nullable(),
+  avatarUrl: z.string().optional().nullable(),
   subscription: SubscriptionLevel,
+  updatedAt: z.string().datetime(),
 });
 
 export const SubscriptionResponseSchema = z.object({

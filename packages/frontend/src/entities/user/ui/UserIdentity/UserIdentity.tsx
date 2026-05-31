@@ -5,61 +5,43 @@ import styles from './UserIdentity.module.scss';
 import { memo } from 'react';
 import classNames from 'classnames';
 import { Dropdown, MenuProps } from 'antd';
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
-import { useRouter } from 'next/navigation';
+import { createUserIdentityMenuItems, USER_IDENTITY_MENU_KEYS } from './UserIdentityMenuItems';
+import { getImageUrl } from '@shared/lib/imageUrl';
+import { User } from '@aichat/shared';
+import { ASSETS } from '@shared/constants/assets';
+
+type UserIdentityUser = Pick<User, 'avatarUrl' | 'name' | 'email' | 'updatedAt'>;
 
 type UserIdentityProps = {
-  href: string;
-  avatarSrc: string;
-  name: string;
-  email: string;
+  user: UserIdentityUser;
   isOpen: boolean;
+  onProfileClick?: () => void;
   onLogout?: () => void;
   className?: string;
 };
 
-const DROPDOWN_KEYS = {
-  Profile: 'profile',
-  Logout: 'logout',
-} as const;
-
 const UserIdentityComponent = (props: UserIdentityProps) => {
-  const { href, avatarSrc, name, email, isOpen, onLogout, className } = props;
+  const { user, isOpen, onProfileClick, onLogout, className } = props;
+  const { avatarUrl, name, email, updatedAt } = user;
 
-  const router = useRouter();
+  const avatarSrc: string = avatarUrl ? getImageUrl(avatarUrl, updatedAt) : ASSETS.AVATARS.DEFAULT_USER;
 
-  const dropdownItems: MenuProps['items'] = [
-    {
-      key: DROPDOWN_KEYS.Profile,
-      label: 'Profile',
-      icon: <UserOutlined style={{ color: 'white' }} />,
-    },
-    {
-      type: 'divider',
-    },
-    {
-      key: DROPDOWN_KEYS.Logout,
-      label: 'Logout',
-      icon: <LogoutOutlined />,
-      danger: true,
-    },
-  ];
+  const items = createUserIdentityMenuItems();
 
   const handleDropdownClick: NonNullable<MenuProps['onClick']> = ({ key }) => {
-    if (key === DROPDOWN_KEYS.Profile) {
-      router.push(href);
+    if (key === USER_IDENTITY_MENU_KEYS.Profile) {
+      onProfileClick?.();
     }
 
-    if (key === DROPDOWN_KEYS.Logout) {
+    if (key === USER_IDENTITY_MENU_KEYS.Logout) {
       onLogout?.();
     }
   };
 
   return (
     <Dropdown
-      menu={{ items: dropdownItems, onClick: handleDropdownClick, className: styles.dropdown }}
+      menu={{ items: items, onClick: handleDropdownClick, className: styles.dropdown }}
       placement="top"
-      arrow
     >
       <div className={classNames(styles.userButton, className)}>
         <Image

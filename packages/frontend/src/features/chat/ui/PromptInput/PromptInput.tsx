@@ -11,6 +11,7 @@ import { useSendMessage } from '@features/chat/api';
 import { Tooltip } from 'antd';
 import { useStreamingMessage } from '@features/chat/model';
 import { FieldTextarea } from '@shared/ui/FieldTextarea';
+import { ASSETS } from '@shared/constants/assets';
 
 type PromptInputProps = {
   chatId?: string;
@@ -96,8 +97,14 @@ export const PromptInput = (props: PromptInputProps) => {
         onKeyDown={handleTextareaKeyDown}
       />
       <Tooltip title={tooltipTitle} placement="top" mouseEnterDelay={0.15}>
-        <Button className={styles.button} type="submit" disabled={isSubmitDisabled}>
-          <Image src="/icons/send.svg" alt="Send message" width={22} height={22} />
+        <Button
+          className={styles.button}
+          type="submit"
+          variant="primary"
+          iconOnly
+          disabled={isSubmitDisabled}
+        >
+          <Image src={ASSETS.ICONS.SEND} alt="Send message" width={22} height={22} />
         </Button>
       </Tooltip>
     </form>

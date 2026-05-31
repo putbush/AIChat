@@ -7,7 +7,7 @@ import { UserModule } from '@features/user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MessageModule } from '@features/message/message.module';
 import config from '@common/config';
-import path from 'path';
+import { PUBLIC_DIR, PUBLIC_SERVE_ROOT } from '@common/constants';
 
 @Module({
   imports: [
@@ -17,8 +17,8 @@ import path from 'path';
     }),
     AuthModule,
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', '..', '..', '..', 'public/'),
-      serveRoot: '/public',
+      rootPath: PUBLIC_DIR,
+      serveRoot: PUBLIC_SERVE_ROOT,
     }),
     ChatModule,
     UserModule,

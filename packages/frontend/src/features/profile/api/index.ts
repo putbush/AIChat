@@ -1,0 +1,1 @@
+export { useUpdateAvatar } from './useUpdateAvatar';

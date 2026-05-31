@@ -1,0 +1,66 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: aichat-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-aichat}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-aichat}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    container_name: aichat-backend
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+    restart: unless-stopped
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-aichat}
+      JWT_SECRET: ${JWT_SECRET:-change-me}
+      JWT_ACCESS_TOKEN_TTL: ${JWT_ACCESS_TOKEN_TTL:-2h}
+      JWT_REFRESH_TOKEN_TTL: ${JWT_REFRESH_TOKEN_TTL:-7d}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+      AI_PROVIDER: ${AI_PROVIDER:-gemini}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    ports:
+      - "${BACKEND_PORT:-5000}:5000"
+    volumes:
+      - public_avatars:/app/public/avatars
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    container_name: aichat-frontend
+    build:
+      context: .
+      dockerfile: docker/frontend.Dockerfile
+      args:
+        BACKEND_API_URL: backend
+        BACKEND_API_PORT: 5000
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:5000}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      BACKEND_API_URL: backend
+      BACKEND_API_PORT: 5000
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:5000}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  public_avatars:

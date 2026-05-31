@@ -3,12 +3,20 @@
   "version": "1.0.0",
   "description": "AI Chat Application",
   "scripts": {
+    "prepare": "husky",
     "dev:frontend": "pnpm --filter frontend dev",
     "dev:backend": "pnpm --filter backend start:dev",
     "dev": "concurrently \"pnpm dev:frontend\" \"pnpm dev:backend\"",
+    "check": "pnpm check:shared && pnpm check:backend && pnpm check:frontend",
+    "check:shared": "pnpm --filter @aichat/shared build",
+    "check:backend": "pnpm --filter backend exec jest --runInBand && pnpm --filter backend exec jest --config ./test/jest-integration.json --runInBand && pnpm --filter backend exec tsc --noEmit",
+    "check:frontend": "pnpm --filter frontend types",
     "lint:frontend": "pnpm --filter frontend lint",
     "lint:backend": "pnpm --filter backend lint",
-    "lint": "concurrently \"pnpm lint:frontend\" \"pnpm lint:backend\""
+    "lint": "concurrently \"pnpm lint:frontend\" \"pnpm lint:backend\"",
+    "docker:up": "docker compose --env-file .env.docker up --build",
+    "docker:down": "docker compose --env-file .env.docker down",
+    "docker:clean": "docker compose --env-file .env.docker down -v"
   },
   "keywords": [],
   "author": "Ilya Kladkov",
@@ -20,10 +28,9 @@
     "lint-staged": "^16.2.7"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,css,md,json}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
+    "packages/backend/**/*.{js,ts}": "pnpm --filter backend exec eslint --fix",
+    "packages/frontend/**/*.{js,jsx,ts,tsx}": "pnpm --filter frontend exec eslint --fix",
+    "*.{css,scss,md,json}": "pnpm --filter backend exec prettier --write"
   },
   "dependencies": {
     "@ant-design/icons": "^6.2.2"

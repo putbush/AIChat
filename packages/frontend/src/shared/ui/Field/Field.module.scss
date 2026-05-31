@@ -32,20 +32,12 @@
 }
 
 .eyeButton {
+  --button-icon-size: #{rem(32)};
+
   position: absolute;
   top: 50%;
   right: rem(10);
   transform: translateY(-50%);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: rem(32);
-  height: rem(32);
-  padding: 0;
-  border: 0;
-  background: transparent;
 }
 
 .isInvalid {

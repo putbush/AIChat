@@ -21,7 +21,7 @@ export const UpgradeButton = ({
     return;
   } else if (index === currentSubscriptionIndex) {
     return (
-      <Button className={styles.current} disabled>
+      <Button className={styles.current} fullWidth disabled>
         You already have this plan
       </Button>
     );
@@ -31,6 +31,7 @@ export const UpgradeButton = ({
         className={classNames(styles.upgrade, {
           [styles.upgrade_active]: isActive,
         })}
+        fullWidth
         onClick={onClick}
       >
         Get {planName.charAt(0).toUpperCase() + planName.slice(1)}

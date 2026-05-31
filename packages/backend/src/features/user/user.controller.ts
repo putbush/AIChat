@@ -55,6 +55,7 @@ export class UserController {
   async setAvatar(
     @UploadedFile(
       new ParseFilePipe({
+        fileIsRequired: true,
         validators: [
           new FileTypeValidator({
             fileType: /\/(jpg|jpeg|png|webp)$/,

@@ -15,7 +15,9 @@
   border-radius: rem(14);
   border: var(--card-border-color);
   background-color: var(--color-black-300);
-  transition: transform var(--transition-duration), border-color var(--transition-duration);
+  transition:
+    transform var(--transition-duration),
+    border-color var(--transition-duration);
 
   &_active {
     border-color: #65e2fe30;
@@ -106,6 +108,6 @@
     height: var(--card-space-18);
     flex: 0 0 var(--card-space-18);
     margin-top: rem(3);
-    background: url('/icons/blue-tick.svg') center / contain no-repeat;
+    background: var(--asset-icon-blue-tick) center / contain no-repeat;
   }
 }

@@ -3,7 +3,15 @@ import { PrismaService } from '@infra/prisma/prisma.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import path from 'path';
+import sharp from 'sharp';
 import { ERROR_MESSAGES } from '@common/constants';
+import {
+  AVATAR_IMAGE_SIZE,
+  AVATAR_WEBP_EFFORT,
+  AVATAR_WEBP_QUALITY,
+  AVATARS_PUBLIC_PATH,
+  AVATARS_UPLOAD_DIR,
+} from './user.constants';
 
 @Injectable()
 export class UserService {
@@ -29,7 +37,7 @@ export class UserService {
       throw new BadRequestException(ERROR_MESSAGES.USER_NO_AVATAR);
     }
 
-    const filePath = this.uploadAvatar(id, file);
+    const filePath = await this.uploadAvatar(id, file);
 
     await this.prisma.user.update({
       where: { id },
@@ -39,23 +47,27 @@ export class UserService {
     return { avatarUrl: filePath };
   }
 
-  private uploadAvatar(id: string, file: Express.Multer.File) {
-    const uploadDir = path.join(
-      __dirname,
-      '..',
-      '..',
-      '..',
-      '..',
-      '..',
-      '..',
-      'public',
-      'avatars',
-    );
-    const filePath = path.join(uploadDir, `${id}.webp`);
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+  private async uploadAvatar(id: string, file: Express.Multer.File) {
+    const fileName = `${id}.webp`;
+    const filePath = path.join(AVATARS_UPLOAD_DIR, fileName);
+
+    if (!fs.existsSync(AVATARS_UPLOAD_DIR)) {
+      fs.mkdirSync(AVATARS_UPLOAD_DIR, { recursive: true });
     }
-    fs.writeFileSync(filePath, file.buffer);
-    return `/public/avatars/${id}.webp`;
+
+    await sharp(file.buffer)
+      .rotate()
+      .resize(AVATAR_IMAGE_SIZE, AVATAR_IMAGE_SIZE, {
+        fit: 'cover',
+        position: 'center',
+        withoutEnlargement: true,
+      })
+      .webp({
+        quality: AVATAR_WEBP_QUALITY,
+        effort: AVATAR_WEBP_EFFORT,
+      })
+      .toFile(filePath);
+
+    return `${AVATARS_PUBLIC_PATH}/${fileName}`;
   }
 }

@@ -7,7 +7,7 @@ export const useRegister = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (credentials: RegistrationDataDTO) =>
-      apiMutation<AuthTokens>(FRONTEND_API_PATHS.AUTH.REGISTER, credentials),
+      apiMutation<AuthTokens, RegistrationDataDTO>(FRONTEND_API_PATHS.AUTH.REGISTER, credentials),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },

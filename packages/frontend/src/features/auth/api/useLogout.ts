@@ -9,7 +9,7 @@ export const useLogout = () => {
   const router = useRouter();
 
   const logout = async () => {
-    apiMutation<AuthTokens>(FRONTEND_API_PATHS.AUTH.LOGOUT);
+    await apiMutation<AuthTokens>(FRONTEND_API_PATHS.AUTH.LOGOUT);
 
     queryClient.clear();
 

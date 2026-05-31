@@ -1,12 +1,21 @@
 import { ERROR_MESSAGES } from '@shared/constants/errors';
 import { apiClient } from '../core/axios';
-import { isAxiosError } from 'axios';
+import { AxiosRequestConfig, isAxiosError, Method } from 'axios';
 
-type MutationParams = Record<string, string | number | boolean >;
+type ApiMutationOptions = {
+  method?: Extract<Method, 'post' | 'put' | 'patch' | 'delete'>;
+  config?: AxiosRequestConfig;
+};
 
-export const apiMutation = async <T>(url: string, params?: MutationParams): Promise<T> => {
+export const apiMutation = async <TResponse, TPayload = unknown>(
+  url: string,
+  params?: TPayload,
+  options: ApiMutationOptions = {},
+): Promise<TResponse> => {
+  const { method = 'post', config } = options;
+
   try {
-    const { data } = await apiClient.post<T>(url, params);
+    const { data } = await apiClient.request<TResponse>({ url, method, data: params, ...config });
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response?.status === 401) {

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { memo } from 'react';
 import { Tooltip } from 'antd';
 import { LINK_PATHS } from '@shared/constants/routes';
+import { ASSETS } from '@shared/constants/assets';
 
 type HistoryItemProps = {
   chat: Chat;
@@ -17,7 +18,7 @@ const HistoryItemComponent = (props: HistoryItemProps) => {
 
   const link = (
     <Link href={LINK_PATHS.CHAT(chat.id)} className={styles.item}>
-      <Image src="/icons/chat-icon.svg" alt="Chat icon" width={18} height={18} />
+      <Image src={ASSETS.ICONS.CHAT} alt="Chat icon" width={18} height={18} />
       {isOpen && <span className={styles.title}>{chat.title || DEFAULT_CHAT_NAME}</span>}
     </Link>
   );

@@ -8,6 +8,7 @@ import { useCallback, useEffect } from 'react';
 import type { SidebarVariant } from '@shared/lib/sidebar/sidebarVariant';
 import classNames from 'classnames';
 import { LINK_PATHS } from '@shared/constants/routes';
+import { ASSETS } from '@shared/constants/assets';
 
 type CreateChatButtonProps = {
   variant: SidebarVariant;
@@ -52,7 +53,7 @@ export const CreateChatButton = (props: CreateChatButtonProps) => {
       onClick={onSubmit}
       aria-keyshortcuts="Control+K"
     >
-      <Image src="/icons/plus.svg" alt="" width={24} height={24} />
+      <Image src={ASSETS.ICONS.PLUS} alt="" width={24} height={24} />
       {isExpanded && (
         <>
           <span className={styles.buttonText}>New Chat</span>

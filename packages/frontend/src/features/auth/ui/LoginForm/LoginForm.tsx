@@ -68,7 +68,9 @@ export const LoginForm = () => {
           },
         )}
         type="submit"
-        gradient
+        variant="gradient"
+        size="lg"
+        fullWidth
         disabled={isPending}
       >
         {isPending ? 'Logging in...' : 'Login'}

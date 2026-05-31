@@ -1,17 +1,5 @@
 @use '@styles/helpers' as *;
 
 .button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: rem(36);
-  height: rem(36);
-  padding: 0;
-  background-color: var(--color-black-200);
   border-radius: rem(10);
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--color-gray);
-  }
 }

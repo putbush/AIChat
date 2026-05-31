@@ -1,8 +1,6 @@
 @use '@styles/helpers' as *;
 
 :root {
-  --transition-duration: 0.2s;
-
   --chat-shell-padding: #{fluid(24, 16)};
   --chat-window-offset: #{fluid(40, 16)};
   --chat-content-width: #{rem(880)};

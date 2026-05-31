@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { SidebarHeader } from './SidebarHeader';
 import { ToggleSidebar } from './ToggleSidebar';
 import { CreateChatButton, ChatsHistory } from '@features/chats-history';
-import { UserProfile } from '@features/user';
+import { CurrentUserPanel } from '@features/user';
 import { SidebarFooter } from './SidebarFooter';
 import { sidebarStore } from '../model';
 import { upgradePlanModalStore } from '@widgets/upgrade-plan-modal/model';
@@ -46,7 +46,7 @@ export const ChatsSidebar = observer(() => {
 
         <CreateChatButton variant={variant} />
         <ChatsHistory variant={variant} />
-        <UserProfile variant={variant} toggleUpgradeModal={toggleModal} />
+        <CurrentUserPanel variant={variant} toggleUpgradeModal={toggleModal} />
 
         {isOpen && <SidebarFooter />}
       </aside>

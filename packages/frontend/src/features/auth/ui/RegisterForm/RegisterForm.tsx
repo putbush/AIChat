@@ -28,7 +28,11 @@ export const RegisterForm = () => {
   });
 
   const onSubmit = (data: RegistrationDTO) => {
-    const { confirmPassword: _, ...dto } = data;
+    const dto = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
 
     setError(null);
     mutate(dto, {
@@ -89,7 +93,9 @@ export const RegisterForm = () => {
           },
         )}
         type="submit"
-        gradient
+        variant="gradient"
+        size="lg"
+        fullWidth
         disabled={isPending}
       >
         {isPending ? 'Registering...' : 'Register'}

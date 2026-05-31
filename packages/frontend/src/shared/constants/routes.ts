@@ -11,6 +11,7 @@ export const BACKEND_API_PATHS = {
   USER: {
     PROFILE: '/user/profile',
     SUBSCRIPTION: '/user/subscription',
+    UPDATE_AVATAR: '/user/avatar',
   },
   MESSAGE: {
     SEND: '/message',
@@ -31,6 +32,7 @@ export const FRONTEND_API_PATHS = {
   USER: {
     PROFILE: '/user/profile',
     SUBSCRIPTION: '/user/subscription',
+    UPDATE_AVATAR: '/user/avatar',
   },
   MESSAGE: {
     SEND: '/message',

@@ -1,11 +1,106 @@
 @use '@styles/helpers' as *;
 
 .button {
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8);
+  min-width: 0;
+  border: var(--button-border, none);
   border-radius: rem(8);
-  padding-inline: rem(14);
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  background: var(--button-background, transparent);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    color var(--transition-duration),
+    background-color var(--transition-duration),
+    border-color var(--transition-duration),
+    opacity var(--transition-duration);
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
-.gradient {
+.sizeSm {
+  min-height: rem(32);
+  padding: rem(7) rem(12);
+  font-size: rem(13);
+}
+
+.sizeMd {
+  min-height: rem(40);
+  padding: rem(10) rem(14);
+  font-size: rem(14);
+}
+
+.sizeLg {
+  min-height: rem(46);
+  padding: rem(13) rem(18);
+  font-size: rem(15);
+}
+
+.sizeIcon {
+  width: var(--button-icon-size, #{rem(36)});
+  height: var(--button-icon-size, #{rem(36)});
+  padding: 0;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.iconOnly {
+  flex: 0 0 auto;
+}
+
+.variantPlain {
+}
+
+.variantSecondary {
+  --button-background: var(--color-black-200);
+
+  color: var(--color-white);
+
+  &:hover:not(:disabled) {
+    background: var(--button-hover-background, var(--color-gray));
+  }
+}
+
+.variantPrimary {
+  --button-background: var(--color-purple-secondary);
+
+  color: var(--color-white);
+
+  &:hover:not(:disabled) {
+    opacity: 0.86;
+  }
+}
+
+.variantDanger {
+  --button-border: 1px solid rgb(255 0 0 / 35%);
+  --button-background: rgb(255 0 0 / 8%);
+
+  color: var(--color-red);
+
+  &:hover:not(:disabled) {
+    background: rgb(255 0 0 / 14%);
+  }
+}
+
+.variantGradient {
   @include gradient;
+
+  color: var(--color-black-400);
+
+  &:hover:not(:disabled) {
+    opacity: 0.86;
+  }
 }

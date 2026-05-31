@@ -6,9 +6,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'localhost',
-        port: '5000', // указываем порт
-        pathname: '/public/**', // разрешаем все пути под /uploads
+        hostname: process.env.BACKEND_API_URL || 'localhost',
+        port: process.env.BACKEND_API_PORT || '5000',
+        pathname: '/public/**',
       },
     ],
   },

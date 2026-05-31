@@ -17,7 +17,5 @@ export default async function ChatPage({ params }: ChatPageProps) {
     notFound();
   }
 
-
-  //TODO: ДОБАВИТЬ ПРИ ОТПРАВКЕ СООБЩЕНИЯ НЕ СБРОС КЕША И НОВЫЙ ЗАПРОС, А АВТО ДОБАВЛЕНИЕ В КЕШ И В КОМПОНЕНТ
   return <ChatConversation chatId={chat.id} title={chat.title} />;
 }

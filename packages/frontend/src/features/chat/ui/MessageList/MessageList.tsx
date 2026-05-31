@@ -49,7 +49,9 @@ export const MessageList = (props: MessageListProps) => {
       <div className={styles.error}>
         <p className={styles.errorMessage}>{error?.message}</p>
         <Link href="/">
-          <Button className={styles.errorButton}>Go back</Button>
+          <Button className={styles.errorButton} variant="secondary">
+            Go back
+          </Button>
         </Link>
       </div>
     );

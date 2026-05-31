@@ -1,20 +1,19 @@
 @use '@styles/helpers' as *;
 
 .button {
-  display: flex;
+  --button-background: var(--color-black-300);
+  --button-border: var(--border-black-100);
+
   justify-content: space-between;
   gap: rem(6);
-  align-items: center;
-  color: var(--color-white);
-  background-color: var(--color-black-300);
   padding: fluid(10, 7) fluid(14, 10);
   font-size: fluid(14, 11);
-  border: var(--border);
   margin-top: rem(-6);
   border-radius: rem(10);
+  color: var(--color-white);
 
   &:hover {
-    background-color: var(--color-gray);
+    --button-background: var(--color-gray);
   }
 }
 
