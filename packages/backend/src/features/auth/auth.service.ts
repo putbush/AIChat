@@ -1,12 +1,12 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { PrismaService } from '@infra/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { hash, verify } from 'argon2';
+import { verify } from 'argon2';
 import type { Request, Response } from 'express';
 import {
   CONFIG_KEYS,
@@ -16,6 +16,7 @@ import {
 import { JwtPayload } from './interfaces/jwt.payload';
 import { User } from '@prisma/client';
 import { AuthTokens } from '@aichat/shared';
+import { UserService } from '@features/user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -23,8 +24,8 @@ export class AuthService {
   private readonly JWT_REFRESH_TOKEN_TTL: number;
 
   constructor(
-    private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
+    @Inject('IUserService') private readonly userService: UserService,
     private readonly jwt: JwtService,
   ) {
     this.JWT_ACCESS_TOKEN_TTL = this.configService.getOrThrow<number>(
@@ -36,38 +37,23 @@ export class AuthService {
   }
 
   async register(
-    res: Response,
     name: string,
     email: string,
     password: string,
   ): Promise<AuthTokens> {
-    const existingUser = await this.prisma.user.findUnique({
-      where: { email },
-    });
+    const existingUser = await this.userService.findByEmail(email);
 
     if (existingUser) {
       throw new ConflictException(ERROR_MESSAGES.AUTH_USER_EXISTS);
     }
 
-    const user = await this.prisma.user.create({
-      data: {
-        name,
-        email,
-        password: await hash(password),
-      },
-    });
+    const user = await this.userService.createUser(name, email, password);
 
-    return this.auth(res, user.id);
+    return this.auth(user.id);
   }
 
-  async login(
-    res: Response,
-    email: string,
-    password: string,
-  ): Promise<AuthTokens> {
-    const user = await this.prisma.user.findUnique({
-      where: { email },
-    });
+  async login(email: string, password: string): Promise<AuthTokens> {
+    const user = await this.userService.findByEmail(email);
 
     if (!user) {
       throw new UnauthorizedException(ERROR_MESSAGES.AUTH_INVALID_CREDENTIALS);
@@ -79,10 +65,10 @@ export class AuthService {
       throw new UnauthorizedException(ERROR_MESSAGES.AUTH_INVALID_CREDENTIALS);
     }
 
-    return this.auth(res, user.id);
+    return this.auth(user.id);
   }
 
-  async refresh(req: Request, res: Response): Promise<AuthTokens> {
+  async refresh(req: Request): Promise<AuthTokens> {
     const refreshToken = req.cookies[REFRESH_TOKEN_COOKIE_NAME] as string;
 
     if (!refreshToken) {
@@ -91,31 +77,33 @@ export class AuthService {
       );
     }
 
-    const payload: JwtPayload = await this.jwt.verifyAsync(refreshToken);
+    try {
+      const payload: string = await this.jwt.verifyAsync(refreshToken);
 
-    const user = await this.prisma.user.findUnique({
-      where: { id: payload.id },
-    });
+      const user = await this.userService.findById(payload.id);
 
-    if (!user) {
-      throw new UnauthorizedException(ERROR_MESSAGES.AUTH_USER_NOT_FOUND);
+      if (!user) {
+        throw new UnauthorizedException(ERROR_MESSAGES.USER_NOT_FOUND);
+      }
+
+      return this.auth(user.id);
+    } catch {
+      throw new UnauthorizedException(
+        ERROR_MESSAGES.AUTH_INVALID_REFRESH_TOKEN,
+      );
     }
-
-    return this.auth(res, user.id);
   }
 
-  private auth(res: Response, id: string): AuthTokens {
+  private auth(id: string): AuthTokens {
     const { accessToken, refreshToken } = this.generateTokens(id);
     return { accessToken, refreshToken };
   }
 
   async validateUser(payload: JwtPayload): Promise<User> {
-    const user = await this.prisma.user.findUnique({
-      where: { id: payload.id },
-    });
+    const user = await this.userService.findById(payload.id);
 
     if (!user) {
-      throw new UnauthorizedException(ERROR_MESSAGES.AUTH_USER_NOT_FOUND);
+      throw new UnauthorizedException(ERROR_MESSAGES.USER_NOT_FOUND);
     }
 
     return user;

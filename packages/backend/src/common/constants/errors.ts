@@ -2,8 +2,9 @@ export const ERROR_MESSAGES = {
   UNEXPECTED: 'An unexpected error occurred. Please try again later.',
   AUTH_USER_EXISTS: 'User with this email already exists',
   AUTH_INVALID_CREDENTIALS: 'User not found or invalid credentials',
+  AUTH_INVALID_REFRESH_TOKEN: 'Invalid refresh token',
   AUTH_REFRESH_TOKEN_MISSING: 'Refresh token is missing',
-  AUTH_USER_NOT_FOUND: 'User not found',
+  USER_NOT_FOUND: 'User not found',
   CHAT_NOT_FOUND: 'Chat not found',
   MESSAGE_LIMIT_OUT_OF_RANGE:
     'Limit must be greater than 0 and less than or equal to 100',

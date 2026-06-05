@@ -12,10 +12,30 @@ import {
   AVATARS_PUBLIC_PATH,
   AVATARS_UPLOAD_DIR,
 } from './user.constants';
+import { hash } from 'argon2';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
+
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.prisma.user.findUnique({ where: { email } });
+  }
+
+  async findById(id: string): Promise<User | null> {
+    return await this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async createUser(name: string, email: string, password: string) {
+    return this.prisma.user.create({
+      data: {
+        name,
+        email,
+        password: await hash(password),
+      },
+    });
+  }
 
   async setSubscription(
     id: string,

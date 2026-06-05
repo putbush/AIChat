@@ -4,14 +4,9 @@ import { JwtPayload } from './jwt.payload';
 import { AuthTokens } from '@aichat/shared';
 
 export interface IAuthService {
-  register(
-    res: Response,
-    name: string,
-    email: string,
-    password: string,
-  ): Promise<AuthTokens>;
-  login(res: Response, email: string, password: string): Promise<AuthTokens>;
-  refresh(req: Request, res: Response): Promise<AuthTokens>;
+  register(name: string, email: string, password: string): Promise<AuthTokens>;
+  login(email: string, password: string): Promise<AuthTokens>;
+  refresh(req: Request): Promise<AuthTokens>;
 
   validateUser(payload: JwtPayload): Promise<User>;
 }

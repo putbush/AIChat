@@ -4,9 +4,9 @@ import {
   LoginCredentialsSchema,
   RegistrationDataSchema,
 } from '@aichat/shared';
-import { Body, Controller, Inject, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Inject, Post, Req } from '@nestjs/common';
 import { ZodExceptionPipe } from '@common/pipes';
-import type { Request, Response } from 'express';
+import type { Request } from 'express';
 import type { IAuthService } from './interfaces/auth.interface';
 import type { AuthTokens } from '@aichat/shared';
 
@@ -18,31 +18,26 @@ export class AuthController {
 
   @Post('register')
   async register(
-    @Res({ passthrough: true }) res: Response,
     @Body(new ZodExceptionPipe(RegistrationDataSchema))
     registrationDto: RegistrationDataDTO,
   ): Promise<AuthTokens> {
     const { name, email, password } = registrationDto;
 
-    return await this.authService.register(res, name, email, password);
+    return await this.authService.register(name, email, password);
   }
 
   @Post('login')
   async login(
-    @Res({ passthrough: true }) res: Response,
     @Body(new ZodExceptionPipe(LoginCredentialsSchema))
     loginDto: LoginDataDTO,
   ): Promise<AuthTokens> {
     const { email, password } = loginDto;
 
-    return await this.authService.login(res, email, password);
+    return await this.authService.login(email, password);
   }
 
   @Post('refresh')
-  async refresh(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
-  ): Promise<AuthTokens> {
-    return await this.authService.refresh(req, res);
+  async refresh(@Req() req: Request): Promise<AuthTokens> {
+    return await this.authService.refresh(req);
   }
 }
